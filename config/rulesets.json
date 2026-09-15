@@ -1,0 +1,275 @@
+{
+  "version": 1,
+  "merged_rulesets": {
+    "magicnet-cn-domain": {
+      "description": "Consolidated China domestic domains, Tencent, WeChat, Bing CN and domestic CDN endpoints",
+      "sources": [
+        "metacubex-geosite-cn",
+        "geosite-cn",
+        "karing-acl4ssr-china-domain",
+        "metacubex-service-tencent",
+        "karing-acl4ssr-wechat",
+        "metacubex-service-bing@cn",
+        "geosite-geolocation-cn",
+        "ddch-direct"
+      ]
+    },
+    "magicnet-cn-ip": {
+      "description": "Consolidated China GeoIP ranges, collapsed and deduplicated",
+      "sources": [
+        "metacubex-geoip-cn",
+        "geoip-cn",
+        "karing-acl4ssr-china-ip"
+      ]
+    },
+    "magicnet-adblock": {
+      "description": "Aggregated advertising and tracking blocking rules",
+      "sources": [
+        "geosite-category-ads-all",
+        "karing-acl4ssr-banad"
+      ]
+    },
+    "magicnet-dev": {
+      "description": "Developer services, registries and package repositories",
+      "sources": [
+        "metacubex-service-category-dev",
+        "geosite-category-dev",
+        "metacubex-service-docker",
+        "metacubex-service-github",
+        "metacubex-service-gitlab",
+        "metacubex-service-huggingface",
+        "metacubex-service-npmjs"
+      ]
+    },
+    "magicnet-media": {
+      "description": "International streaming, media and entertainment platforms",
+      "sources": [
+        "metacubex-service-category-media",
+        "geosite-category-media",
+        "metacubex-service-category-entertainment",
+        "yuu-geosite-stream-global",
+        "karing-acl4ssr-proxy-media"
+      ]
+    },
+    "magicnet-social": {
+      "description": "Social media, community, messaging and workspace collaboration",
+      "sources": [
+        "metacubex-service-category-social-media-!cn",
+        "geosite-category-social-media-!cn",
+        "metacubex-service-category-communication",
+        "metacubex-service-notion",
+        "metacubex-service-slack",
+        "metacubex-service-reddit"
+      ]
+    },
+    "magicnet-download": {
+      "description": "Gaming platform downloads and operating system update services",
+      "sources": [
+        "metacubex-service-category-game-platforms-download",
+        "metacubex-service-win-update",
+        "metacubex-service-apple-update"
+      ]
+    },
+    "magicnet-games": {
+      "description": "International gaming platforms and servers",
+      "sources": [
+        "metacubex-service-category-games-!cn",
+        "geosite-category-games"
+      ]
+    },
+    "magicnet-ai": {
+      "description": "Comprehensive AI services and LLM providers",
+      "sources": [
+        "metacubex-service-category-ai-!cn",
+        "geosite-category-ai-!cn",
+        "yuu-geosite-ai",
+        "karing-acl4ssr-ai"
+      ]
+    },
+    "magicnet-dns-guard": {
+      "description": "Encrypted DNS endpoints and IP geolocation detection services",
+      "sources": [
+        "metacubex-service-category-doh",
+        "metacubex-service-category-ip-geo-detect"
+      ]
+    },
+    "magicnet-network-test": {
+      "description": "Connectivity check endpoints and speed testing servers",
+      "sources": [
+        "metacubex-service-connectivity-check",
+        "metacubex-service-speedtest"
+      ]
+    },
+    "magicnet-proxy": {
+      "description": "Global non-CN proxy rules and GFW lists",
+      "sources": [
+        "metacubex-geosite-geolocation-not-cn",
+        "geosite-geolocation-!cn",
+        "geosite-gfw",
+        "ddch-gfw",
+        "ddch-proxy",
+        "karing-acl4ssr-proxy-gfwlist",
+        "karing-acl4ssr-proxy-lite"
+      ]
+    }
+  },
+  "service_rulesets": {
+    "service-openai": [
+      "metacubex-service-openai"
+    ],
+    "service-google-gemini": [
+      "metacubex-service-google-gemini"
+    ],
+    "service-xai": [
+      "metacubex-service-xai"
+    ],
+    "service-anthropic": [
+      "metacubex-service-anthropic"
+    ],
+    "service-google": [
+      "metacubex-service-google"
+    ],
+    "service-google-play": [
+      "metacubex-service-google-play"
+    ],
+    "service-youtube": [
+      "metacubex-service-youtube"
+    ],
+    "service-github": [
+      "metacubex-service-github"
+    ],
+    "service-discord": [
+      "metacubex-service-discord"
+    ],
+    "service-netflix": [
+      "metacubex-service-netflix"
+    ],
+    "service-spotify": [
+      "metacubex-service-spotify"
+    ],
+    "service-twitter": [
+      "metacubex-service-twitter"
+    ],
+    "service-whatsapp": [
+      "metacubex-service-whatsapp"
+    ],
+    "service-telegram": [
+      "metacubex-service-telegram"
+    ],
+    "service-telegram-ip": [
+      "geoip-telegram"
+    ],
+    "service-bing": [
+      "metacubex-service-bing"
+    ],
+    "service-bing-cn": [
+      "metacubex-service-bing@cn"
+    ],
+    "service-icloud": [
+      "metacubex-service-icloud"
+    ],
+    "service-apple": [
+      "metacubex-service-apple"
+    ],
+    "service-apple-update": [
+      "metacubex-service-apple-update"
+    ],
+    "service-microsoft": [
+      "metacubex-service-microsoft"
+    ],
+    "service-win-update": [
+      "metacubex-service-win-update"
+    ],
+    "service-scholar": [
+      "metacubex-service-category-scholar-!cn"
+    ],
+    "service-tencent": [
+      "metacubex-service-tencent"
+    ],
+    "service-wechat": [
+      "karing-acl4ssr-wechat"
+    ]
+  },
+  "standalone_sources": [
+    "ddch-direct",
+    "ddch-gfw",
+    "ddch-proxy",
+    "geoip-cn",
+    "geoip-private",
+    "geoip-telegram",
+    "geosite-category-ads-all",
+    "geosite-category-ai-!cn",
+    "geosite-category-dev",
+    "geosite-category-games",
+    "geosite-category-media",
+    "geosite-category-social-media-!cn",
+    "geosite-cn",
+    "geosite-geolocation-!cn",
+    "geosite-geolocation-cn",
+    "geosite-gfw",
+    "geosite-private",
+    "geosite-telegram",
+    "karing-acl4ssr-ai",
+    "karing-acl4ssr-banad",
+    "karing-acl4ssr-china-domain",
+    "karing-acl4ssr-china-ip",
+    "karing-acl4ssr-proxy-gfwlist",
+    "karing-acl4ssr-proxy-lite",
+    "karing-acl4ssr-proxy-media",
+    "karing-acl4ssr-wechat",
+    "metacubex-geoip-cn",
+    "metacubex-geosite-cn",
+    "metacubex-geosite-geolocation-not-cn",
+    "metacubex-service-anthropic",
+    "metacubex-service-apple-update",
+    "metacubex-service-apple",
+    "metacubex-service-bing",
+    "metacubex-service-bing@cn",
+    "metacubex-service-category-ai-!cn",
+    "metacubex-service-category-communication",
+    "metacubex-service-category-dev",
+    "metacubex-service-category-doh",
+    "metacubex-service-category-entertainment",
+    "metacubex-service-category-game-platforms-download",
+    "metacubex-service-category-games-!cn",
+    "metacubex-service-category-ip-geo-detect",
+    "metacubex-service-category-media",
+    "metacubex-service-category-scholar-!cn",
+    "metacubex-service-category-social-media-!cn",
+    "metacubex-service-connectivity-check",
+    "metacubex-service-discord",
+    "metacubex-service-docker",
+    "metacubex-service-github",
+    "metacubex-service-gitlab",
+    "metacubex-service-google-gemini",
+    "metacubex-service-google-play",
+    "metacubex-service-google",
+    "metacubex-service-huggingface",
+    "metacubex-service-icloud",
+    "metacubex-service-microsoft",
+    "metacubex-service-netflix",
+    "metacubex-service-notion",
+    "metacubex-service-npmjs",
+    "metacubex-service-openai",
+    "metacubex-service-reddit",
+    "metacubex-service-slack",
+    "metacubex-service-speedtest",
+    "metacubex-service-spotify",
+    "metacubex-service-telegram",
+    "metacubex-service-tencent",
+    "metacubex-service-twitter",
+    "metacubex-service-whatsapp",
+    "metacubex-service-win-update",
+    "metacubex-service-xai",
+    "metacubex-service-youtube",
+    "sukka-chatgpt-voice",
+    "yuu-geosite-ai",
+    "yuu-geosite-pcdn-cn",
+    "yuu-geosite-stream-global"
+  ],
+  "binary_sources": [
+    "hagezi-anti-piracy.srs",
+    "hagezi-light.srs",
+    "hagezi-normal.srs"
+  ]
+}
