@@ -15,6 +15,8 @@ import shutil
 import subprocess
 import sys
 import time
+import tempfile
+import re
 from pathlib import Path
 from typing import Any, Dict, List, Set, Tuple
 
@@ -28,6 +30,8 @@ DIST_DIR = ROOT / "dist"
 class DomainTrie:
     """Trie for domain suffixes to identify and prune redundant subdomains and sub-suffixes."""
 
+    TERMINAL = None
+
     def __init__(self) -> None:
         self.root: Dict[str, Any] = {}
 
@@ -37,38 +41,39 @@ class DomainTrie:
         Returns True if the suffix is new and kept.
         Returns False if it is redundant (already covered by a broader suffix).
         """
-        clean = domain.strip(".").lower()
+        clean = domain[1:] if domain.startswith(".") else domain
         if not clean:
             return False
         parts = clean.split(".")[::-1]
         node = self.root
         for part in parts:
-            if "_term" in node:
+            if self.TERMINAL in node:
                 return False  # An existing broader suffix covers this
             if part not in node:
                 node[part] = {}
             node = node[part]
-        if "_term" in node:
+        inclusive = not domain.startswith(".")
+        if self.TERMINAL in node and (node[self.TERMINAL] or not inclusive):
             return False
         # Clear child nodes as this new suffix is broader than any prior longer suffixes
         node.clear()
-        node["_term"] = True
+        node[self.TERMINAL] = inclusive
         return True
 
     def matches(self, domain: str) -> bool:
         """Return True if the domain is covered by any existing suffix in the trie."""
-        clean = domain.strip(".").lower()
+        clean = domain[1:] if domain.startswith(".") else domain
         if not clean:
             return False
         parts = clean.split(".")[::-1]
         node = self.root
         for part in parts:
-            if "_term" in node:
+            if self.TERMINAL in node:
                 return True
             if part not in node:
                 return False
             node = node[part]
-        return "_term" in node
+        return node.get(self.TERMINAL) is True
 
 
 class IpOptimizer:
@@ -88,8 +93,8 @@ class IpOptimizer:
                     v4_nets.append(net)
                 else:
                     v6_nets.append(net)
-            except ValueError:
-                continue
+            except ValueError as error:
+                raise ValueError(f"Invalid IP network: {c!r}") from error
 
         collapsed_v4 = sorted(
             list(ipaddress.collapse_addresses(v4_nets)),
@@ -114,7 +119,7 @@ def optimize_rule_components(
     # 1. Optimize domain suffixes using trie
     trie = DomainTrie()
     # Sort suffixes by ascending label count, then length (broader suffixes first)
-    sorted_suffixes = sorted(suffixes, key=lambda s: (len(s.split(".")), len(s)))
+    sorted_suffixes = sorted(suffixes, key=lambda s: (len(s.lstrip(".").split(".")), s.startswith("."), s))
     kept_suffixes = sorted([s for s in sorted_suffixes if trie.insert_suffix(s)])
 
     # 2. Prune exact domains covered by any suffix
@@ -144,11 +149,16 @@ def optimize_rule_components(
 
 def load_source_rules(source_name: str) -> List[Dict[str, Any]]:
     """Load raw rule objects from sources/<source_name>.json."""
+    safe_target(source_name)
     path = SOURCES_DIR / f"{source_name}.json"
     if not path.is_file():
         raise FileNotFoundError(f"Source file not found: {path}")
-    data = json.loads(path.read_text(encoding="utf-8"))
-    return data.get("rules", [])
+    data = load_json(path)
+    if (not isinstance(data, dict) or data.get("version") not in (1, 2)
+            or not isinstance(data.get("rules"), list)
+            or any(not isinstance(rule, dict) or not rule for rule in data["rules"])):
+        raise ValueError(f"Invalid source rule set: {path.name}")
+    return data["rules"]
 
 
 def merge_and_optimize_sources(source_names: List[str]) -> Tuple[Dict[str, Any], Dict[str, int]]:
@@ -159,11 +169,22 @@ def merge_and_optimize_sources(source_names: List[str]) -> Tuple[Dict[str, Any],
     regexes: Set[str] = set()
     cidrs: Set[str] = set()
 
+    preserved = []
+    simple_fields = {"domain", "domain_suffix", "domain_keyword", "domain_regex", "ip_cidr"}
     raw_stats = {"domains": 0, "suffixes": 0, "keywords": 0, "regexes": 0, "cidrs": 0}
 
     for name in source_names:
         rules = load_source_rules(name)
         for r in rules:
+            # Extra predicates, inversion and logical groups are not an OR-list
+            # of domains. Keep them intact; the compiler validates their schema.
+            if set(r) - simple_fields:
+                preserved.append(r)
+                continue
+            for field, values in r.items():
+                values = values if isinstance(values, list) else [values]
+                if not values or any(not isinstance(v, str) or not v for v in values):
+                    raise ValueError(f"Invalid {field} in source {name}")
             raw_d = r.get("domain", [])
             raw_s = r.get("domain_suffix", [])
             raw_k = r.get("domain_keyword", [])
@@ -171,25 +192,25 @@ def merge_and_optimize_sources(source_names: List[str]) -> Tuple[Dict[str, Any],
             raw_c = r.get("ip_cidr", [])
 
             for item in raw_d if isinstance(raw_d, list) else ([raw_d] if raw_d else []):
-                domains.add(item.strip().lower())
+                domains.add(item)
                 raw_stats["domains"] += 1
             for item in raw_s if isinstance(raw_s, list) else ([raw_s] if raw_s else []):
-                suffixes.add(item.strip().lower())
+                suffixes.add(item)
                 raw_stats["suffixes"] += 1
             for item in raw_k if isinstance(raw_k, list) else ([raw_k] if raw_k else []):
-                keywords.add(item.strip())
+                keywords.add(item)
                 raw_stats["keywords"] += 1
             for item in raw_rx if isinstance(raw_rx, list) else ([raw_rx] if raw_rx else []):
-                regexes.add(item.strip())
+                regexes.add(item)
                 raw_stats["regexes"] += 1
             for item in raw_c if isinstance(raw_c, list) else ([raw_c] if raw_c else []):
-                cidrs.add(item.strip())
+                cidrs.add(item)
                 raw_stats["cidrs"] += 1
 
     optimized_rule = optimize_rule_components(domains, suffixes, keywords, regexes, cidrs)
     result = {
         "version": 2,
-        "rules": [optimized_rule] if optimized_rule else [],
+        "rules": ([optimized_rule] if optimized_rule else []) + preserved,
     }
 
     opt_stats = {
@@ -217,9 +238,11 @@ def compile_ruleset(json_path: Path, srs_path: Path) -> None:
         raise RuntimeError("sing-box binary not found in PATH")
 
     cmd = [core, "rule-set", "compile", str(json_path), "--output", str(srs_path)]
-    res = subprocess.run(cmd, capture_output=True, text=True)
+    res = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
     if res.returncode != 0:
         raise RuntimeError(f"Failed to compile {json_path.name}: {res.stderr}")
+    if not srs_path.is_file() or srs_path.read_bytes()[:3] != b"SRS":
+        raise RuntimeError(f"Compiler produced invalid SRS: {srs_path.name}")
 
 
 def file_sha256(path: Path) -> str:
@@ -230,29 +253,36 @@ def file_sha256(path: Path) -> str:
     return h.hexdigest()
 
 
-def build_all(check: bool = False) -> Dict[str, Any]:
+def _build_into(output: Path) -> Dict[str, Any]:
     """Execute build pipeline: optimize, merge, write JSON, compile SRS, and generate manifest."""
     start_time = time.time()
-    config = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
-    DIST_DIR.mkdir(parents=True, exist_ok=True)
+    config = load_json(CONFIG_PATH)
+    output.mkdir(parents=True, exist_ok=True)
 
     targets: Dict[str, List[str]] = {}
 
+    def add_target(tag, sources):
+        safe_target(tag)
+        if tag in targets or not isinstance(sources, list) or not sources:
+            raise ValueError(f"Duplicate or empty target: {tag}")
+        for source in sources:
+            safe_target(source)
+        targets[tag] = sources
+
     # 1. Merged rulesets
     for tag, meta in config.get("merged_rulesets", {}).items():
-        targets[tag] = meta["sources"]
+        add_target(tag, meta["sources"])
 
     # 2. Service rulesets
     for tag, sources in config.get("service_rulesets", {}).items():
-        targets[tag] = sources
+        add_target(tag, sources)
 
     # 3. Standalone rulesets (1:1 preservation and optimization)
     for src in config.get("standalone_sources", []):
-        targets[src] = [src]
+        add_target(src, [src])
 
     manifest: Dict[str, Any] = {
         "version": 1,
-        "created_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "rulesets": {},
     }
 
@@ -261,18 +291,13 @@ def build_all(check: bool = False) -> Dict[str, Any]:
     total_opt_rules = 0
 
     for target_name, source_names in targets.items():
-        json_file = DIST_DIR / f"{target_name}.json"
-        srs_file = DIST_DIR / f"{target_name}.srs"
+        json_file = output / f"{target_name}.json"
+        srs_file = output / f"{target_name}.srs"
 
         rule_data, stats = merge_and_optimize_sources(source_names)
         json_content = json.dumps(rule_data, ensure_ascii=False, indent=2) + "\n"
 
-        if check and json_file.is_file():
-            current_content = json_file.read_text(encoding="utf-8")
-            if current_content != json_content:
-                raise AssertionError(f"Rule-set output out of date: {json_file.name}")
-        else:
-            json_file.write_text(json_content, encoding="utf-8")
+        json_file.write_text(json_content, encoding="utf-8")
 
         # Compile to .srs
         compile_ruleset(json_file, srs_file)
@@ -290,8 +315,12 @@ def build_all(check: bool = False) -> Dict[str, Any]:
 
     # Copy binary sources (e.g. AdGuard rule sets) into dist/
     if BINARY_DIR.is_dir():
-        for bin_file in BINARY_DIR.glob("*.srs"):
-            dest_bin = DIST_DIR / bin_file.name
+        for bin_file in sorted(BINARY_DIR.glob("*.srs")):
+            if bin_file.stem in targets:
+                raise ValueError(f"Binary source collides with target: {bin_file.stem}")
+            if bin_file.read_bytes()[:3] != b"SRS":
+                raise ValueError(f"Invalid binary source: {bin_file.name}")
+            dest_bin = output / bin_file.name
             shutil.copy2(bin_file, dest_bin)
             manifest["rulesets"][bin_file.stem] = {
                 "srs_size": dest_bin.stat().st_size,
@@ -300,7 +329,7 @@ def build_all(check: bool = False) -> Dict[str, Any]:
             }
 
     # Save manifest
-    manifest_path = DIST_DIR / "manifest.json"
+    manifest_path = output / "manifest.json"
     manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     elapsed = time.time() - start_time
@@ -313,6 +342,53 @@ def build_all(check: bool = False) -> Dict[str, Any]:
     print(f"  Generated files saved to: {DIST_DIR}")
 
     return manifest
+
+
+def safe_target(name: str) -> None:
+    if not isinstance(name, str) or not re.fullmatch(r"[A-Za-z0-9_@!.-]+", name) or name in (".", ".."):
+        raise ValueError(f"Invalid target/source name: {name!r}")
+
+
+def load_json(path: Path):
+    def unique(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError(f"Duplicate JSON key: {key}")
+            result[key] = value
+        return result
+    return json.loads(path.read_text(encoding="utf-8"), object_pairs_hook=unique)
+
+
+def build_all(check: bool = False) -> Dict[str, Any]:
+    """Stage every output before checking or replacing dist; checks never repair it."""
+    if DIST_DIR.is_symlink():
+        raise ValueError("Refusing symlink dist directory")
+    with tempfile.TemporaryDirectory(prefix=".rules-build-", dir=DIST_DIR.parent) as tmp:
+        staged = Path(tmp) / "dist"
+        manifest = _build_into(staged)
+        if check:
+            expected = {p.name for p in staged.iterdir()}
+            actual = {p.name for p in DIST_DIR.iterdir()} if DIST_DIR.is_dir() else set()
+            if expected != actual:
+                raise AssertionError(f"Missing or unexpected dist files: {sorted(expected ^ actual)}")
+            for name in sorted(expected):
+                current = DIST_DIR / name
+                if current.is_symlink() or not current.is_file() or current.read_bytes() != (staged / name).read_bytes():
+                    raise AssertionError(f"Rule-set output out of date: {name}")
+        else:
+            # Whole-directory replacement has a short absent-path window; on
+            # failure restore the old build. Never publish partially compiled sets.
+            backup = Path(tmp) / "previous"
+            if DIST_DIR.exists():
+                DIST_DIR.rename(backup)
+            try:
+                staged.rename(DIST_DIR)
+            except OSError:
+                if backup.exists():
+                    backup.rename(DIST_DIR)
+                raise
+        return manifest
 
 
 def main() -> None:

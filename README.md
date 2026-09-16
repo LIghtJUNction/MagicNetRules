@@ -10,13 +10,13 @@
 
 - **高效去重与剪枝 (Deduplication & Trie Pruning)**：
   - **后缀树剪枝**：基于反向域名字典树（Reverse Domain Trie）消除同名及多级子后缀冗余（例如已有 `example.com` 后缀，自动剔除冗余的 `sub.example.com` 后缀与 `*.example.com` 精确域名）。
-  - **精准域名消冗**：凡已被 `domain_suffix` 涵盖的 `domain` 规则均自动剥离，大幅缩小规则体积与内存占用。
+  - **精准域名消冗**：凡已被 `domain_suffix` 涵盖的 `domain` 规则均自动剥离，缩小规则条目数；设备内存占用需另行测量。
 - **IP CIDR 智能归并 (CIDR Subnet Collapsing)**：
-  - 基于 `ipaddress.collapse_addresses` 算法自动合并重叠与连续的 IPv4/IPv6 子网，减少 15%~25% 的路由条目，加速 Radix Tree 路由查找。
+  - 基于 `ipaddress.collapse_addresses` 算法自动合并重叠与连续的 IPv4/IPv6 子网。实际减少量由构建输出统计，不据此承诺设备内存或延迟改善。
 - **全量集成与分类合并 (Rule Set Consolidation)**：
-  - **合并规则集 (Consolidated)**：将原本分散的数十个分散规则合并为高聚合的业务规则集（如 `magicnet-cn-domain`、`magicnet-cn-ip`、`magicnet-adblock`、`magicnet-media`、`magicnet-dev`、`magicnet-ai` 等），极大减少 sing-box 运行时的规则链层数。
+  - **合并规则集 (Consolidated)**：将原本分散的数十个分散规则合并为高聚合的业务规则集（如 `magicnet-cn-domain`、`magicnet-cn-ip`、`magicnet-adblock`、`magicnet-media`、`magicnet-dev`、`magicnet-ai` 等）。使用方需要显式引用合并后的分类，仓库生成文件本身不会改变运行时配置。
   - **独立服务规则集 (Dedicated Services)**：为 OpenAI、Claude、Gemini、Grok、Google、YouTube、GitHub、Discord、Telegram、Twitter、WhatsApp、Netflix、Spotify 等保持高优先级独立规则，便于独立分流选择。
-  - **100% 向后兼容 (Backward Compatible)**：完整保留原始命名规范的独立规则集，确保旧版配置与测试无缝运行。
+  - **保留旧文件名 (Legacy Names)**：完整保留原始命名规范的独立规则集，供现有配置按文件名引用；兼容性以编译、匹配和设备验收为准。
 - **完整 CI/CD 与自动化测试**：
   - GitHub Actions 自动化编译与测试流水线（架构校验、去重校验、SRS 编译校验、sing-box 真实流量匹配测试、数据一致性 Parity 测试）。
   - 定时自动化上游规则刷新与版本发布。
@@ -91,11 +91,21 @@ python3 -m unittest discover tests -v
 ## CI 工作流
 
 - **`.github/workflows/ci.yml`**：每次 Push 与 PR 自动校验输出与测试套件。
-- **`.github/workflows/update-upstream.yml`**：每周定时从各上游拉取最新规则、自动重新构建优化，若有更新则自动提交。
-- **`.github/workflows/release.yml`**：推送版本 tag 时打包生成 `magicnet-rules.tar.gz` 与 `magicnet-rules.zip` 发布 Release。
+- **`.github/workflows/update-upstream.yml`**：每周定时从各上游拉取最新规则、自动重新构建优化，若有更新则创建 PR，不直接推送 main。
+- **`.github/workflows/release.yml`**：推送版本 tag 时打包生成 单个运行时归档 `magicnet-rules.tar.gz` 与 `SHA256SUMS` 发布 Release。
 
 ---
 
 ## 许可证
 
 [MIT License](LICENSE) © 2026 LIghtJUNction
+
+## 合并边界与校验保证
+
+all-in-one 指一个可校验、可一次分发的归档；其中仍保留不同路由用途的 SRS 分类。不能将直连、代理、拦截分类合成一个无标签的普通 SRS 后，仍期望 sing-box 知道原来的路由动作。`dist/` 中的 JSON 用于审计，不进入运行时归档。
+
+仅对无附加条件的域名/IP OR 规则做合并剪枝。端口、网络、逻辑组合与反选规则原样保留，未知格式交由固定版本编译器拒绝。`.example.com` 不覆盖顶级 `example.com`，正则空格不被清除，非法 CIDR 不被静默丢弃。
+
+构建先生成完整候选，编译失败保留原产物。`--check` 在临时目录重建并逐文件比较 JSON、SRS、清单和文件集合；缺失、多余、篡改均失败，不自动修复。清单不含每次变化的时间戳。集成测试缺少编译器时失败而不是跳过。
+
+CI 使用 `scripts/install-compiler.sh` 下载固定版本且 SHA-256 固定的构建工具；构建工具不会打进 Android 模块。

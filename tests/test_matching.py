@@ -1,6 +1,7 @@
 """End-to-end matching tests using sing-box rule-set match."""
 
 import shutil
+import re
 import subprocess
 import unittest
 from pathlib import Path
@@ -14,7 +15,7 @@ class MatchingTests(unittest.TestCase):
     def setUpClass(cls):
         cls.core = shutil.which("sing-box")
         if not cls.core:
-            raise unittest.SkipTest("sing-box binary not found in PATH")
+            raise RuntimeError("sing-box is required: install the pinned compiler before running integration tests")
 
     def match(self, rule_name: str, target: str) -> bool:
         path = DIST_DIR / f"{rule_name}.srs"
@@ -22,7 +23,8 @@ class MatchingTests(unittest.TestCase):
         cmd = [self.core, "rule-set", "match", "-f", "binary", str(path), target]
         proc = subprocess.run(cmd, capture_output=True, text=True, timeout=10)
         output = proc.stdout.strip() or proc.stderr.strip()
-        return "match rules" in output or "matched" in output
+        self.assertEqual(proc.returncode, 0, f"Rule matching failed: {output}")
+        return re.search(r"^match rules\.\[[0-9]+\]:", output, re.MULTILINE) is not None
 
     def test_service_matches(self):
         cases = [

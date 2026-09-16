@@ -1,11 +1,10 @@
 {
   "version": 1,
-  "created_at": "2026-09-15T17:51:52Z",
   "rulesets": {
     "magicnet-cn-domain": {
       "json_size": 2677981,
-      "srs_size": 448424,
-      "sha256_srs": "b348394b35a61ebf8a67b3bd69d68d67699a336e26c526d511ed3fc04d57895b",
+      "srs_size": 454382,
+      "sha256_srs": "515ae7db05f29f89bb77e124df0869958a5d8d8b7f309f946936270161a7d557",
       "stats": {
         "domains": 349,
         "suffixes": 112626,
@@ -28,8 +27,8 @@
     },
     "magicnet-cn-ip": {
       "json_size": 278936,
-      "srs_size": 40278,
-      "sha256_srs": "0986e1e04c39fbd8c2a569d81fa399b5585e074e09b31839fdcd9603cdba0ac5",
+      "srs_size": 38816,
+      "sha256_srs": "b41b638d7c3f379b5905c6322a2f0cf0a6e560a69603ad5ccb402ad9af05b623",
       "stats": {
         "domains": 0,
         "suffixes": 0,
@@ -47,8 +46,8 @@
     },
     "magicnet-adblock": {
       "json_size": 6083184,
-      "srs_size": 1648974,
-      "sha256_srs": "52c6f9f1d751c5fb636c82f41e37d06f60d2d641f49b16c8608a793217d28752",
+      "srs_size": 1662366,
+      "sha256_srs": "c123d8e836e7efdeacee974c7ff2920217772da6923deca3cfa471d928c4fcdf",
       "stats": {
         "domains": 0,
         "suffixes": 191486,
@@ -65,8 +64,8 @@
     },
     "magicnet-dev": {
       "json_size": 17661,
-      "srs_size": 5530,
-      "sha256_srs": "5fa6dddc746b5796d773a5b77745739a5203bd26573c99672671c60aa0767de4",
+      "srs_size": 5531,
+      "sha256_srs": "e52d0e1eef267e9632a96a9b24461409f5efbefb73bb1335b441c11d94467f4e",
       "stats": {
         "domains": 69,
         "suffixes": 565,
@@ -88,8 +87,8 @@
     },
     "magicnet-media": {
       "json_size": 104319,
-      "srs_size": 30450,
-      "sha256_srs": "4d9e53491b517c42fecb07f983f85451ef3b094d96b4738c293e4e9ef1bb222b",
+      "srs_size": 29384,
+      "sha256_srs": "e4448243a5fc040af0eda4ddbe4879732506fecc33fc0ed1bd4bdf440d7bdb78",
       "stats": {
         "domains": 245,
         "suffixes": 3573,
@@ -109,8 +108,8 @@
     },
     "magicnet-social": {
       "json_size": 20438,
-      "srs_size": 6118,
-      "sha256_srs": "da2742cf8bbb11ca1b7fff674a3b08c04e3f6a7f4653c2d5e549963811abc5a2",
+      "srs_size": 6123,
+      "sha256_srs": "6338a9c83459985bacc526f97f65f121d16708a5e5ce25fa0146e0ccd69ad339",
       "stats": {
         "domains": 6,
         "suffixes": 768,
@@ -131,8 +130,8 @@
     },
     "magicnet-download": {
       "json_size": 36078,
-      "srs_size": 3467,
-      "sha256_srs": "9a1879704007809fae165935fe1d961d927d6c5a3721ef63a017a28794992981",
+      "srs_size": 3470,
+      "sha256_srs": "1dd38b1fe8c789415f61c139f5e74d43ca4ecf20ef7a223f2802425472361141",
       "stats": {
         "domains": 487,
         "suffixes": 387,
@@ -150,8 +149,8 @@
     },
     "magicnet-games": {
       "json_size": 30529,
-      "srs_size": 9340,
-      "sha256_srs": "e2a266722f983febd1a35ec1fc80e4a2a9de1b8ff043edf2eecd62300504aef4",
+      "srs_size": 9344,
+      "sha256_srs": "6bc5418570322b1f4299f3ea958a51ad422d6132fb35ae63d157b631da75766d",
       "stats": {
         "domains": 94,
         "suffixes": 1021,
@@ -168,8 +167,8 @@
     },
     "magicnet-ai": {
       "json_size": 5945,
-      "srs_size": 2051,
-      "sha256_srs": "844620760c998675568b8a8e98af97ad18f7646d052b845c66cbd62c3acb4403",
+      "srs_size": 2054,
+      "sha256_srs": "850bb3f795555b468cef5ad51118470acb8c795d8153ad86eef87903bb28f69c",
       "stats": {
         "domains": 30,
         "suffixes": 166,
@@ -188,8 +187,8 @@
     },
     "magicnet-dns-guard": {
       "json_size": 9328,
-      "srs_size": 2921,
-      "sha256_srs": "eca4149aadcff8fb98da092ebce439f35986d8f56017a8c1b58d6da7c8cca9c6",
+      "srs_size": 2925,
+      "sha256_srs": "5cc0a11eae6f8af1f5beb25f5c0042c1eceb1410bf1bb1adeaa626c60cba0ea9",
       "stats": {
         "domains": 134,
         "suffixes": 227,
@@ -206,8 +205,8 @@
     },
     "magicnet-network-test": {
       "json_size": 1506,
-      "srs_size": 662,
-      "sha256_srs": "3ca704a339fe4fce85e0ad6c9a0539fcabe9ec3ae9a28a7c1bf2e1944879b254",
+      "srs_size": 667,
+      "sha256_srs": "37320f2b930d97a94267aa034198a62297fc506cc494da5d0cc5b27b01a8fd4d",
       "stats": {
         "domains": 18,
         "suffixes": 22,
@@ -224,8 +223,8 @@
     },
     "magicnet-proxy": {
       "json_size": 648584,
-      "srs_size": 154052,
-      "sha256_srs": "66501b22e753f08772c71ba3261781d90676f871b694f3a607f6cbef41448af8",
+      "srs_size": 153666,
+      "sha256_srs": "62aad1ba3383f22e29281c7b85d7572ba6958ad6f669a9d17768861cdeb1ad9e",
       "stats": {
         "domains": 89,
         "suffixes": 24921,
@@ -247,8 +246,8 @@
     },
     "service-openai": {
       "json_size": 952,
-      "srs_size": 431,
-      "sha256_srs": "4455afa8a836684c8525bd3cc301245039f7cc1988bb41953cd5835a88b2f009",
+      "srs_size": 435,
+      "sha256_srs": "d2c8fffc93d82084c4a01955891195cb7df84e1a804200de9e41868ac99e723b",
       "stats": {
         "domains": 9,
         "suffixes": 13,
@@ -264,8 +263,8 @@
     },
     "service-google-gemini": {
       "json_size": 1491,
-      "srs_size": 478,
-      "sha256_srs": "52303e8ca8f9e68a4c7cfaf4510ee90b3f1fc2c0297c8ffc4590df37be20fc4f",
+      "srs_size": 481,
+      "sha256_srs": "9f90dbb61fd2d210a956c07fe754878571bee477c892911571e849af68f41e4a",
       "stats": {
         "domains": 11,
         "suffixes": 30,
@@ -281,8 +280,8 @@
     },
     "service-xai": {
       "json_size": 165,
-      "srs_size": 74,
-      "sha256_srs": "6dbb901c30512a3007a147a2b65e3e094ccb2bd5eadc430f5e903f18c6fc607e",
+      "srs_size": 77,
+      "sha256_srs": "88b662b6ecf53728a581f18e296ed67c4cc5a85230d44a0c1a8ca436c1e7374d",
       "stats": {
         "domains": 0,
         "suffixes": 4,
@@ -298,8 +297,8 @@
     },
     "service-anthropic": {
       "json_size": 335,
-      "srs_size": 157,
-      "sha256_srs": "97eb9299b9cf750e36be90436d0733b0b2d08ffe46ac5146744289c31efaea70",
+      "srs_size": 160,
+      "sha256_srs": "d9de32bb3884bd2127b5ff96da5d26f1d7b69eeaca2dd05d90982bdb55f49f14",
       "stats": {
         "domains": 1,
         "suffixes": 7,
@@ -315,8 +314,8 @@
     },
     "service-google": {
       "json_size": 21024,
-      "srs_size": 6214,
-      "sha256_srs": "653cb13c4e1a213a2a2bd13c146a54022d7a73fe6f1200b871a266a91290fba6",
+      "srs_size": 6240,
+      "sha256_srs": "a1e1d91c6a12e06fa3abeb828cb7ad14b1c3b085a8d149de277b80ed888e0b12",
       "stats": {
         "domains": 19,
         "suffixes": 827,
@@ -332,8 +331,8 @@
     },
     "service-google-play": {
       "json_size": 497,
-      "srs_size": 217,
-      "sha256_srs": "beafb1731aa534157ab9be7bbebf2f4c711b6ccdfdb1f2335bcdd621a03920cc",
+      "srs_size": 220,
+      "sha256_srs": "646adc5da39b1a1373c7feb0a5c480dc9807d3a63392e7ace7c93364fdf531e1",
       "stats": {
         "domains": 0,
         "suffixes": 7,
@@ -349,8 +348,8 @@
     },
     "service-youtube": {
       "json_size": 4428,
-      "srs_size": 1135,
-      "sha256_srs": "ed86e06c4d1d3fe4847245efcf06d433f31535af70ab098f69c3eee0775fb961",
+      "srs_size": 1147,
+      "sha256_srs": "c0536fe1195a661bce0c603686291e36b5465d0f8b046ee562180beeb2eaa20b",
       "stats": {
         "domains": 1,
         "suffixes": 176,
@@ -366,8 +365,8 @@
     },
     "service-github": {
       "json_size": 2439,
-      "srs_size": 689,
-      "sha256_srs": "837ad1a97c3a281e0353ca5dbe348dcead13afa0b43bf6051c34e445aca61650",
+      "srs_size": 692,
+      "sha256_srs": "66f7429acc1054306eda75a3e674085754df5ed221685f866d2fd05e33617d7c",
       "stats": {
         "domains": 28,
         "suffixes": 31,
@@ -383,8 +382,8 @@
     },
     "service-discord": {
       "json_size": 906,
-      "srs_size": 405,
-      "sha256_srs": "9e7b4fe6c2a82a77fe24129748e2b9f431f0d8f96a75064b96ba5a1f2ad520e2",
+      "srs_size": 408,
+      "sha256_srs": "289c98b6887f4de780670618deed0613c2cd489818b2c8abd1ee9d12bb972734",
       "stats": {
         "domains": 2,
         "suffixes": 26,
@@ -400,8 +399,8 @@
     },
     "service-netflix": {
       "json_size": 1066,
-      "srs_size": 341,
-      "sha256_srs": "d55e87205fd441e4b15ade1be7ec770fe61162c23828164eb736f655474b64af",
+      "srs_size": 344,
+      "sha256_srs": "40c5f50c80ceaba2a5e0b5c5760c9c5fce0b08498501397d8264dcae2aeeda53",
       "stats": {
         "domains": 1,
         "suffixes": 23,
@@ -417,8 +416,8 @@
     },
     "service-spotify": {
       "json_size": 897,
-      "srs_size": 359,
-      "sha256_srs": "ad4b9b8c02b5f8e08babcd733899b53e13ae1cb2d3100dc3d7c8465191b8c589",
+      "srs_size": 362,
+      "sha256_srs": "0e187c6c538b48975f07f9668388bf25e1bae43cf8cce2e82396cbb0a7ac94ea",
       "stats": {
         "domains": 8,
         "suffixes": 17,
@@ -434,8 +433,8 @@
     },
     "service-twitter": {
       "json_size": 667,
-      "srs_size": 278,
-      "sha256_srs": "dfd01bfa9b231df074b9e4e5a11966ce8d8f1f6c69232e7392bc30ffea2ab015",
+      "srs_size": 284,
+      "sha256_srs": "a2da69babdc2441e8ac487ddf91a5259e4628de74f44bb9bcd6a2113841bac0f",
       "stats": {
         "domains": 0,
         "suffixes": 24,
@@ -451,8 +450,8 @@
     },
     "service-whatsapp": {
       "json_size": 357,
-      "srs_size": 177,
-      "sha256_srs": "f1e14cf2980cccf9cf660e7ab2c7346cf345ddc8a3fed51fac953718d04ca856",
+      "srs_size": 180,
+      "sha256_srs": "69c3a413c97070f9db7ea836c48998217e2fbfb2535b887e312424da843554a3",
       "stats": {
         "domains": 0,
         "suffixes": 11,
@@ -468,8 +467,8 @@
     },
     "service-telegram": {
       "json_size": 564,
-      "srs_size": 245,
-      "sha256_srs": "8c6493d282bd60c75ea6fef5bc4c2e670ff0364c594650da03c1278eb4b5ca89",
+      "srs_size": 248,
+      "sha256_srs": "30cd392b1d79b0569af077874b36c6892bf13a94dce0d8e4410c3b1976d62ea2",
       "stats": {
         "domains": 0,
         "suffixes": 21,
@@ -485,8 +484,8 @@
     },
     "service-telegram-ip": {
       "json_size": 400,
-      "srs_size": 124,
-      "sha256_srs": "6de64e7818f0d7ffd997eda8b1a6f15b6bfb6b4b0976cddcbc7eafabf53cc46f",
+      "srs_size": 127,
+      "sha256_srs": "c5ae208004b0752baee307348ef820b9fe9e8aa3a14556f54af68791b6d4030b",
       "stats": {
         "domains": 0,
         "suffixes": 0,
@@ -502,8 +501,8 @@
     },
     "service-bing": {
       "json_size": 1099,
-      "srs_size": 469,
-      "sha256_srs": "cffad2d9d86a17f7e99783b7c8644522c20b82af04cdbf58147c3eb0e10ced69",
+      "srs_size": 470,
+      "sha256_srs": "2450c4da4cb22d97c0ac7ee3f2c0db91f183f50c5e2749e30c6c2d18664394e1",
       "stats": {
         "domains": 1,
         "suffixes": 33,
@@ -519,8 +518,8 @@
     },
     "service-bing-cn": {
       "json_size": 300,
-      "srs_size": 109,
-      "sha256_srs": "fe2cce29484252bc382044a8def74ad03a22a4b8fa094ae7b3874e646c46c9e7",
+      "srs_size": 112,
+      "sha256_srs": "3941def52f3c3030cab6dc52db5e7251913555cacd3413d71f8c6d9e42c8a695",
       "stats": {
         "domains": 1,
         "suffixes": 7,
@@ -536,8 +535,8 @@
     },
     "service-icloud": {
       "json_size": 1398,
-      "srs_size": 484,
-      "sha256_srs": "2e682760460aa8925b50ebd7c3e03bdd0d736168964d4aeeeeafc1acd5a1900f",
+      "srs_size": 487,
+      "sha256_srs": "ebc8deafa0cfcb75c2c47119cc0d808b821e52b20f6744b6f552ca3dd804e92b",
       "stats": {
         "domains": 1,
         "suffixes": 52,
@@ -553,8 +552,8 @@
     },
     "service-apple": {
       "json_size": 46560,
-      "srs_size": 14472,
-      "sha256_srs": "1851d9270b0e73ac58188710556d06206acf64838dd2e905f06170663bcb60a1",
+      "srs_size": 14449,
+      "sha256_srs": "bdc028903330da7aa9a43db610caac7b1877f8861bf347e2b13f5a6a759958f8",
       "stats": {
         "domains": 48,
         "suffixes": 1537,
@@ -570,8 +569,8 @@
     },
     "service-apple-update": {
       "json_size": 697,
-      "srs_size": 224,
-      "sha256_srs": "042b0e2990db0f4eb8db321f8f26d0f48bac729f086f7f8764f829c4c32aca51",
+      "srs_size": 227,
+      "sha256_srs": "3776acf4ab5e11d3324b20f870e969357aff7d0fdf620b2053f77221f8932c62",
       "stats": {
         "domains": 0,
         "suffixes": 21,
@@ -587,8 +586,8 @@
     },
     "service-microsoft": {
       "json_size": 17785,
-      "srs_size": 6024,
-      "sha256_srs": "f0ab378945444b4927a739913938d3f34e03a7b5025bbdcb9186fbbd06b1dbbe",
+      "srs_size": 6032,
+      "sha256_srs": "a86d4cbcfddbd3c20bba8e1a569b831d758b052f0318af014158b1ef2e3145ad",
       "stats": {
         "domains": 16,
         "suffixes": 621,
@@ -604,8 +603,8 @@
     },
     "service-win-update": {
       "json_size": 15869,
-      "srs_size": 1546,
-      "sha256_srs": "2ba54a2555eecd9b001e26e4245737032250afc1c8cbb896aa9e84c973bf4f71",
+      "srs_size": 1553,
+      "sha256_srs": "347521beae83ed80156862be5971abe05086d5adbecefbc9257654a8f55d0293",
       "stats": {
         "domains": 0,
         "suffixes": 364,
@@ -621,8 +620,8 @@
     },
     "service-scholar": {
       "json_size": 12839,
-      "srs_size": 4348,
-      "sha256_srs": "e36ff2b90a2f2ab509c6f4cc813fcefb69d6ca225420e6c3f4b7ca4ed8326e3f",
+      "srs_size": 4353,
+      "sha256_srs": "5336c9bdb9c731a0793940f090f851b9672d09917323d428e9b7e3c7ceebedd2",
       "stats": {
         "domains": 89,
         "suffixes": 386,
@@ -638,8 +637,8 @@
     },
     "service-tencent": {
       "json_size": 13449,
-      "srs_size": 3710,
-      "sha256_srs": "84be11f94b279fe331e18032adff920c61d0747dc5c1c11d5a155a2015639689",
+      "srs_size": 3722,
+      "sha256_srs": "355479aaf179d3c872aed6793a0fc1c478061c444477ada4464d2d66992c4a08",
       "stats": {
         "domains": 0,
         "suffixes": 551,
@@ -655,8 +654,8 @@
     },
     "service-wechat": {
       "json_size": 652,
-      "srs_size": 205,
-      "sha256_srs": "4e54a3f16f61104873e4eb4845c9b49dfd8b6662f4336b06b78d9a0becbafd0e",
+      "srs_size": 208,
+      "sha256_srs": "106d897c3720759591f321228cb5f4e6ef04da3e812a15db8141552f9fcc7f59",
       "stats": {
         "domains": 0,
         "suffixes": 12,
@@ -672,8 +671,8 @@
     },
     "ddch-direct": {
       "json_size": 2628530,
-      "srs_size": 438794,
-      "sha256_srs": "02a5166efe4c0aa0cc90eb8ff84251934032d5d6feb44d6c1c8fea427104b144",
+      "srs_size": 444393,
+      "sha256_srs": "691c963df39a66858aa8f1f17796556175a453451e23e5fada4e8be487d8ca1a",
       "stats": {
         "domains": 396,
         "suffixes": 110607,
@@ -689,8 +688,8 @@
     },
     "ddch-gfw": {
       "json_size": 106571,
-      "srs_size": 29613,
-      "sha256_srs": "46cbb9106b3d1e6e39be51b2a70c426d68051ac78e72aa72ca2972d678b49018",
+      "srs_size": 28368,
+      "sha256_srs": "2a71666c2a6e7d6206b0bbbd94d5c2c6e885f1df1edc40e03c66e7c0cf25979b",
       "stats": {
         "domains": 0,
         "suffixes": 4365,
@@ -706,8 +705,8 @@
     },
     "ddch-proxy": {
       "json_size": 675398,
-      "srs_size": 159665,
-      "sha256_srs": "609d0728448a894b3d4945915ddc35adf938d75cd2e26df63102b2862759bee9",
+      "srs_size": 159037,
+      "sha256_srs": "55cec894229018e8784ca62a0db26419c80f0cd8cbe8f724e52e3cb58f7962cc",
       "stats": {
         "domains": 94,
         "suffixes": 26338,
@@ -723,8 +722,8 @@
     },
     "geoip-cn": {
       "json_size": 265342,
-      "srs_size": 38286,
-      "sha256_srs": "ee05aee39f89ca439e1aa5459141225b7f23d3400cb4e3ca736f45250112ee4a",
+      "srs_size": 36667,
+      "sha256_srs": "dcb4037f2edbe71daabc6c2793a528dd5bd6a62c54a0025cadded0831c5eedf5",
       "stats": {
         "domains": 0,
         "suffixes": 0,
@@ -740,8 +739,8 @@
     },
     "geoip-private": {
       "json_size": 479,
-      "srs_size": 137,
-      "sha256_srs": "55e7c75b145b98755b14a2ab9bbf8b0686c15d4fc1d507aa48c1021df6bfd8bf",
+      "srs_size": 141,
+      "sha256_srs": "80926e0bfa94bee6958e6fe5f84ae69432543dcae29799331b1059da58440330",
       "stats": {
         "domains": 0,
         "suffixes": 0,
@@ -757,8 +756,8 @@
     },
     "geoip-telegram": {
       "json_size": 400,
-      "srs_size": 124,
-      "sha256_srs": "6de64e7818f0d7ffd997eda8b1a6f15b6bfb6b4b0976cddcbc7eafabf53cc46f",
+      "srs_size": 127,
+      "sha256_srs": "c5ae208004b0752baee307348ef820b9fe9e8aa3a14556f54af68791b6d4030b",
       "stats": {
         "domains": 0,
         "suffixes": 0,
@@ -774,8 +773,8 @@
     },
     "geosite-category-ads-all": {
       "json_size": 5971721,
-      "srs_size": 1625409,
-      "sha256_srs": "5c4475513d548985389541ad8385d7ba63b42696eb4fcb87bbafb7f90544292b",
+      "srs_size": 1637251,
+      "sha256_srs": "d8602fd5cf4bf6f7cecf09e363e70849d70a5d38d6c8a3d78540b992565728ef",
       "stats": {
         "domains": 0,
         "suffixes": 187863,
@@ -791,8 +790,8 @@
     },
     "geosite-category-ai-!cn": {
       "json_size": 5312,
-      "srs_size": 1815,
-      "sha256_srs": "f17c0be3b0ba67e5e64c212b1d449c7a3379befacfade771a42514dbcd2676a2",
+      "srs_size": 1818,
+      "sha256_srs": "e4d64e54584c14ae72a30967fbb8a2e625249e8ae5751239f5462daa989ca168",
       "stats": {
         "domains": 28,
         "suffixes": 151,
@@ -808,8 +807,8 @@
     },
     "geosite-category-dev": {
       "json_size": 17581,
-      "srs_size": 5522,
-      "sha256_srs": "9b9a21dc1b52b349d4cb48908ecc456fcc32660cc689d670aa3793ec3263eda2",
+      "srs_size": 5525,
+      "sha256_srs": "12fb1367c7bd7aaa4b232bc2b888ebd474f8bc71fc9310f482fe687ec65681ca",
       "stats": {
         "domains": 69,
         "suffixes": 561,
@@ -826,7 +825,7 @@
     "geosite-category-games": {
       "json_size": 30531,
       "srs_size": 9349,
-      "sha256_srs": "b130ceaa921dc94c546ba3595d8e28f41fe17032aecb86443e9ff2e1f1ccf145",
+      "sha256_srs": "dce82e6efaef39b0adafec31a475d717c8d17874bf6b7867d0c62e9a34e5633d",
       "stats": {
         "domains": 94,
         "suffixes": 1021,
@@ -842,8 +841,8 @@
     },
     "geosite-category-media": {
       "json_size": 41597,
-      "srs_size": 12551,
-      "sha256_srs": "e3de616d30d7ed280f20f9fc541e27f13efe97acb266128714ec1a4275b2c536",
+      "srs_size": 12538,
+      "sha256_srs": "9a364ae8abf2d95cadb017a1e67d10f0964dd36f9e47bc2b7b85955467839187",
       "stats": {
         "domains": 24,
         "suffixes": 1555,
@@ -859,8 +858,8 @@
     },
     "geosite-category-social-media-!cn": {
       "json_size": 16228,
-      "srs_size": 4842,
-      "sha256_srs": "793957b92463ca5fac9df38b4f806b54440775399ed97c1ec1875de0c746641e",
+      "srs_size": 4851,
+      "sha256_srs": "dbef60a4d3bb7ef446b20051a4235b1f1f6f3490a7a27edc09953f9d5249e364",
       "stats": {
         "domains": 4,
         "suffixes": 602,
@@ -876,8 +875,8 @@
     },
     "geosite-cn": {
       "json_size": 2629070,
-      "srs_size": 439178,
-      "sha256_srs": "9396473f4db0c62e817102767141daa1cee0a9fa8915dc4e1471257d5592dadf",
+      "srs_size": 444827,
+      "sha256_srs": "4c4181072a894703c345a52b77d5119c9d437503a423aa20ac5a9fcf90216d41",
       "stats": {
         "domains": 396,
         "suffixes": 110607,
@@ -893,8 +892,8 @@
     },
     "geosite-geolocation-!cn": {
       "json_size": 681855,
-      "srs_size": 162012,
-      "sha256_srs": "ec92da2b6f29eaee17fe1974dd53fbab7686714e6daa96b3120c999a8eca3355",
+      "srs_size": 161122,
+      "sha256_srs": "fdfb4985dc7b4421edb91ca54aa4b3bd21a27f49ef02af3bc15b8ad5ac3954fa",
       "stats": {
         "domains": 94,
         "suffixes": 26338,
@@ -910,8 +909,8 @@
     },
     "geosite-geolocation-cn": {
       "json_size": 123650,
-      "srs_size": 28352,
-      "sha256_srs": "594d133d7536b191f5e0678cffb1296d4629dff6dca31b6f517772f568784516",
+      "srs_size": 27279,
+      "sha256_srs": "ee8aca6997b3697b50659feacaae3e6834cdedb4238f6779867aa1b06b8f54a9",
       "stats": {
         "domains": 37,
         "suffixes": 5251,
@@ -927,8 +926,8 @@
     },
     "geosite-gfw": {
       "json_size": 106571,
-      "srs_size": 29613,
-      "sha256_srs": "46cbb9106b3d1e6e39be51b2a70c426d68051ac78e72aa72ca2972d678b49018",
+      "srs_size": 28368,
+      "sha256_srs": "2a71666c2a6e7d6206b0bbbd94d5c2c6e885f1df1edc40e03c66e7c0cf25979b",
       "stats": {
         "domains": 0,
         "suffixes": 4365,
@@ -944,8 +943,8 @@
     },
     "geosite-private": {
       "json_size": 4075,
-      "srs_size": 696,
-      "sha256_srs": "b487f40bc4606aa03c6b979f8b108d02924a21c19155a40162e3db16350cd996",
+      "srs_size": 698,
+      "sha256_srs": "c0f5f4f599426be357184883ebc696e0f975b254a32594642ab62f104e035b7d",
       "stats": {
         "domains": 12,
         "suffixes": 118,
@@ -961,8 +960,8 @@
     },
     "geosite-telegram": {
       "json_size": 564,
-      "srs_size": 245,
-      "sha256_srs": "8c6493d282bd60c75ea6fef5bc4c2e670ff0364c594650da03c1278eb4b5ca89",
+      "srs_size": 248,
+      "sha256_srs": "30cd392b1d79b0569af077874b36c6892bf13a94dce0d8e4410c3b1976d62ea2",
       "stats": {
         "domains": 0,
         "suffixes": 21,
@@ -978,8 +977,8 @@
     },
     "karing-acl4ssr-ai": {
       "json_size": 1389,
-      "srs_size": 539,
-      "sha256_srs": "b8ecbd792d622e0f045f73ac7f1b9bf3fc21107143821b1b3334dea38e1d589c",
+      "srs_size": 543,
+      "sha256_srs": "9a73de19563f412dd81daa0927cddee6f899faf4f1ffa3e17ac916eb635af81d",
       "stats": {
         "domains": 9,
         "suffixes": 34,
@@ -995,8 +994,8 @@
     },
     "karing-acl4ssr-banad": {
       "json_size": 172285,
-      "srs_size": 46759,
-      "sha256_srs": "61461cf8fae2975a004bea979cc777c6d5a4b3d15573264dcc6728772aa36fe8",
+      "srs_size": 44801,
+      "sha256_srs": "10a857eaa12948f4bd4004058324138d8842e1bae09102336337fc818b06e93f",
       "stats": {
         "domains": 0,
         "suffixes": 5724,
@@ -1012,8 +1011,8 @@
     },
     "karing-acl4ssr-china-domain": {
       "json_size": 14014,
-      "srs_size": 3631,
-      "sha256_srs": "886b43f757239612b3f9ef38a748ce296e621e1007ed10702b66c026d38d503c",
+      "srs_size": 3638,
+      "sha256_srs": "2cce86f9a063af98d32d6a391a343e4348a32e478b06cb94ed6a93beec19800c",
       "stats": {
         "domains": 8,
         "suffixes": 571,
@@ -1029,8 +1028,8 @@
     },
     "karing-acl4ssr-china-ip": {
       "json_size": 199886,
-      "srs_size": 25238,
-      "sha256_srs": "d4d480405ed3adc3819de0b6432e7ffeef7e3c29b45c48157dcabdb6f1e6f240",
+      "srs_size": 24852,
+      "sha256_srs": "89a131c3f3cff938070fd3a643259e3bce0ccdb3d9d45fb13be353c5d13a9ae7",
       "stats": {
         "domains": 0,
         "suffixes": 0,
@@ -1046,8 +1045,8 @@
     },
     "karing-acl4ssr-proxy-gfwlist": {
       "json_size": 105444,
-      "srs_size": 29234,
-      "sha256_srs": "ee5d44f5242418bad2bd1d6ab3f80ee9a581949f65e880f586741c385534b8ae",
+      "srs_size": 28056,
+      "sha256_srs": "6b955616eb0884b3024f623af2bd907a7447c3c303dd5289266a3320d558fd96",
       "stats": {
         "domains": 0,
         "suffixes": 4313,
@@ -1063,8 +1062,8 @@
     },
     "karing-acl4ssr-proxy-lite": {
       "json_size": 9952,
-      "srs_size": 2993,
-      "sha256_srs": "bea040192cb367054f9ea9467ccbc1417c9d99764be274b052a3e3df190093b5",
+      "srs_size": 2996,
+      "sha256_srs": "fe27609fcc3dd509bea7dddc9129e7eff24b862bc55877843e874f96c9e470f7",
       "stats": {
         "domains": 6,
         "suffixes": 296,
@@ -1080,8 +1079,8 @@
     },
     "karing-acl4ssr-proxy-media": {
       "json_size": 9392,
-      "srs_size": 3086,
-      "sha256_srs": "a70445b8e44fc9fe77229db6070572656f671f50bca4676da847e14adac25656",
+      "srs_size": 3090,
+      "sha256_srs": "9efffe5316a4c5b1854d21536006fcd6820fb292f8044cd33053aaee6321ab8a",
       "stats": {
         "domains": 60,
         "suffixes": 239,
@@ -1097,8 +1096,8 @@
     },
     "karing-acl4ssr-wechat": {
       "json_size": 652,
-      "srs_size": 205,
-      "sha256_srs": "4e54a3f16f61104873e4eb4845c9b49dfd8b6662f4336b06b78d9a0becbafd0e",
+      "srs_size": 208,
+      "sha256_srs": "106d897c3720759591f321228cb5f4e6ef04da3e812a15db8141552f9fcc7f59",
       "stats": {
         "domains": 0,
         "suffixes": 12,
@@ -1114,8 +1113,8 @@
     },
     "metacubex-geoip-cn": {
       "json_size": 259805,
-      "srs_size": 38125,
-      "sha256_srs": "56b299000943ef2e22de336c393868c20f26757cb2ac7ba74419e16041783e6b",
+      "srs_size": 36491,
+      "sha256_srs": "f7ff340fe2e0f7b88d6bd009978a3c90a18ec302ceb6f7dea8e72ef8e474734d",
       "stats": {
         "domains": 0,
         "suffixes": 0,
@@ -1131,8 +1130,8 @@
     },
     "metacubex-geosite-cn": {
       "json_size": 2626898,
-      "srs_size": 439318,
-      "sha256_srs": "74405412146e5aff9dccc1be7b6dd4ec923b6548835b579e8fc5e09810243431",
+      "srs_size": 444971,
+      "sha256_srs": "a95a9d84e6213c919b21d2cd4beb471baceb1e26877f00fec325d8741d026667",
       "stats": {
         "domains": 0,
         "suffixes": 111022,
@@ -1148,8 +1147,8 @@
     },
     "metacubex-geosite-geolocation-not-cn": {
       "json_size": 680707,
-      "srs_size": 161512,
-      "sha256_srs": "7856843a10da29ef7313793421cb5c7f493725274e8534700f6adaa1cb16c651",
+      "srs_size": 160655,
+      "sha256_srs": "b3a7121ce4af0bb93be3c2d565e89605024b2e09e643df1d417824d9b80c23eb",
       "stats": {
         "domains": 95,
         "suffixes": 26294,
@@ -1165,8 +1164,8 @@
     },
     "metacubex-service-anthropic": {
       "json_size": 335,
-      "srs_size": 157,
-      "sha256_srs": "97eb9299b9cf750e36be90436d0733b0b2d08ffe46ac5146744289c31efaea70",
+      "srs_size": 160,
+      "sha256_srs": "d9de32bb3884bd2127b5ff96da5d26f1d7b69eeaca2dd05d90982bdb55f49f14",
       "stats": {
         "domains": 1,
         "suffixes": 7,
@@ -1182,8 +1181,8 @@
     },
     "metacubex-service-apple-update": {
       "json_size": 697,
-      "srs_size": 224,
-      "sha256_srs": "042b0e2990db0f4eb8db321f8f26d0f48bac729f086f7f8764f829c4c32aca51",
+      "srs_size": 227,
+      "sha256_srs": "3776acf4ab5e11d3324b20f870e969357aff7d0fdf620b2053f77221f8932c62",
       "stats": {
         "domains": 0,
         "suffixes": 21,
@@ -1199,8 +1198,8 @@
     },
     "metacubex-service-apple": {
       "json_size": 46560,
-      "srs_size": 14472,
-      "sha256_srs": "1851d9270b0e73ac58188710556d06206acf64838dd2e905f06170663bcb60a1",
+      "srs_size": 14449,
+      "sha256_srs": "bdc028903330da7aa9a43db610caac7b1877f8861bf347e2b13f5a6a759958f8",
       "stats": {
         "domains": 48,
         "suffixes": 1537,
@@ -1216,8 +1215,8 @@
     },
     "metacubex-service-bing": {
       "json_size": 1099,
-      "srs_size": 469,
-      "sha256_srs": "cffad2d9d86a17f7e99783b7c8644522c20b82af04cdbf58147c3eb0e10ced69",
+      "srs_size": 470,
+      "sha256_srs": "2450c4da4cb22d97c0ac7ee3f2c0db91f183f50c5e2749e30c6c2d18664394e1",
       "stats": {
         "domains": 1,
         "suffixes": 33,
@@ -1233,8 +1232,8 @@
     },
     "metacubex-service-bing@cn": {
       "json_size": 300,
-      "srs_size": 109,
-      "sha256_srs": "fe2cce29484252bc382044a8def74ad03a22a4b8fa094ae7b3874e646c46c9e7",
+      "srs_size": 112,
+      "sha256_srs": "3941def52f3c3030cab6dc52db5e7251913555cacd3413d71f8c6d9e42c8a695",
       "stats": {
         "domains": 1,
         "suffixes": 7,
@@ -1250,8 +1249,8 @@
     },
     "metacubex-service-category-ai-!cn": {
       "json_size": 5312,
-      "srs_size": 1815,
-      "sha256_srs": "f17c0be3b0ba67e5e64c212b1d449c7a3379befacfade771a42514dbcd2676a2",
+      "srs_size": 1818,
+      "sha256_srs": "e4d64e54584c14ae72a30967fbb8a2e625249e8ae5751239f5462daa989ca168",
       "stats": {
         "domains": 28,
         "suffixes": 151,
@@ -1267,8 +1266,8 @@
     },
     "metacubex-service-category-communication": {
       "json_size": 3824,
-      "srs_size": 1372,
-      "sha256_srs": "09ca00e30672f2e925d094dd2d08690489b3ea322aa19a69ebbf04bd9e33e358",
+      "srs_size": 1375,
+      "sha256_srs": "1392f62e02d03cb6dc2ddb887a56222383f7562205fe4858bb5fdb5421506c74",
       "stats": {
         "domains": 2,
         "suffixes": 147,
@@ -1285,7 +1284,7 @@
     "metacubex-service-category-dev": {
       "json_size": 17598,
       "srs_size": 5548,
-      "sha256_srs": "b7ed79d2a93e68e2dbe8e1d072cb76778e2811d59bbf51057781c1fcf8f8503c",
+      "sha256_srs": "7868a338fad9d20209d9f840a9d60d79e9029185f11ccb489032522ba66f017c",
       "stats": {
         "domains": 69,
         "suffixes": 562,
@@ -1301,8 +1300,8 @@
     },
     "metacubex-service-category-doh": {
       "json_size": 3738,
-      "srs_size": 1185,
-      "sha256_srs": "f195f136bf3cb742682ad5eab99ef0d1320ba4a320b7683e0caa5f384f9b906d",
+      "srs_size": 1188,
+      "sha256_srs": "caa28943a82287c48bd1f260af6970ac85d8a9fcaac15d8961f041585f805ad9",
       "stats": {
         "domains": 124,
         "suffixes": 3,
@@ -1318,8 +1317,8 @@
     },
     "metacubex-service-category-entertainment": {
       "json_size": 56905,
-      "srs_size": 17162,
-      "sha256_srs": "ac663a4cdb69d21b37e1cecb87975f6f9e7cf6b2548e8a10898447c6ceab2fd1",
+      "srs_size": 16944,
+      "sha256_srs": "865a79b563fe52eb63eda9039e4f80489b8fd7f0e21777fde6708bad8688ad7a",
       "stats": {
         "domains": 218,
         "suffixes": 1840,
@@ -1335,8 +1334,8 @@
     },
     "metacubex-service-category-game-platforms-download": {
       "json_size": 19758,
-      "srs_size": 1822,
-      "sha256_srs": "16ae5b8ebee7d74d536adedf923381d0281d389e5fe5804fbafad654e5dbd18a",
+      "srs_size": 1825,
+      "sha256_srs": "585de57fa33833134f277e65aff2fe737b28361f6f0215886d5bc52cf5ea2adf",
       "stats": {
         "domains": 489,
         "suffixes": 2,
@@ -1352,8 +1351,8 @@
     },
     "metacubex-service-category-games-!cn": {
       "json_size": 24254,
-      "srs_size": 7624,
-      "sha256_srs": "61b1dcb7a3a47a3152c37d53442521fc5ae0511fd6b357bda57014074b6f133c",
+      "srs_size": 7622,
+      "sha256_srs": "b13888e1ce43ff82f732972dba03402c8cb3c2568d9ae96dc2aa8e5757601362",
       "stats": {
         "domains": 92,
         "suffixes": 762,
@@ -1369,8 +1368,8 @@
     },
     "metacubex-service-category-ip-geo-detect": {
       "json_size": 5697,
-      "srs_size": 1858,
-      "sha256_srs": "a5c75552f1e15e70f787bc223c6e46a9fae8ba38b84819e3f3286e37157b50ed",
+      "srs_size": 1862,
+      "sha256_srs": "ab3dd60db29f684026be694a327b4a5b72c4deed2f184ea7cefc895ca474691b",
       "stats": {
         "domains": 10,
         "suffixes": 224,
@@ -1386,8 +1385,8 @@
     },
     "metacubex-service-category-media": {
       "json_size": 41592,
-      "srs_size": 12560,
-      "sha256_srs": "8f2e27fabbb2de74079afb97566fbb25cbc00f01649b859c24baa023a484cfa5",
+      "srs_size": 12553,
+      "sha256_srs": "34405bd7eb11cae426e3b70c895d2cb66a0624d605dfc965689478157636000a",
       "stats": {
         "domains": 24,
         "suffixes": 1555,
@@ -1403,8 +1402,8 @@
     },
     "metacubex-service-category-scholar-!cn": {
       "json_size": 12839,
-      "srs_size": 4348,
-      "sha256_srs": "e36ff2b90a2f2ab509c6f4cc813fcefb69d6ca225420e6c3f4b7ca4ed8326e3f",
+      "srs_size": 4353,
+      "sha256_srs": "5336c9bdb9c731a0793940f090f851b9672d09917323d428e9b7e3c7ceebedd2",
       "stats": {
         "domains": 89,
         "suffixes": 386,
@@ -1420,8 +1419,8 @@
     },
     "metacubex-service-category-social-media-!cn": {
       "json_size": 16228,
-      "srs_size": 4842,
-      "sha256_srs": "793957b92463ca5fac9df38b4f806b54440775399ed97c1ec1875de0c746641e",
+      "srs_size": 4851,
+      "sha256_srs": "dbef60a4d3bb7ef446b20051a4235b1f1f6f3490a7a27edc09953f9d5249e364",
       "stats": {
         "domains": 4,
         "suffixes": 602,
@@ -1437,8 +1436,8 @@
     },
     "metacubex-service-connectivity-check": {
       "json_size": 1020,
-      "srs_size": 455,
-      "sha256_srs": "9ebea4757fbbd22a4c824b9eebd47919063d02a861a4c131cd2fc52c26562888",
+      "srs_size": 458,
+      "sha256_srs": "a7d5220bda1e263170f62cfe5080535dbd99c9a52e6217ebb216b69e98a3dad1",
       "stats": {
         "domains": 17,
         "suffixes": 10,
@@ -1454,8 +1453,8 @@
     },
     "metacubex-service-discord": {
       "json_size": 906,
-      "srs_size": 405,
-      "sha256_srs": "9e7b4fe6c2a82a77fe24129748e2b9f431f0d8f96a75064b96ba5a1f2ad520e2",
+      "srs_size": 408,
+      "sha256_srs": "289c98b6887f4de780670618deed0613c2cd489818b2c8abd1ee9d12bb972734",
       "stats": {
         "domains": 2,
         "suffixes": 26,
@@ -1471,8 +1470,8 @@
     },
     "metacubex-service-docker": {
       "json_size": 343,
-      "srs_size": 196,
-      "sha256_srs": "0afa11f8c48beeb9475b5a798a494f4d78d72fb1d1852b095d4226c1f3a6d13d",
+      "srs_size": 200,
+      "sha256_srs": "ed47d702ba34fd9a75fd981fa6c8e87fafa7cdc616d4eafde7b215bb1b34fdc1",
       "stats": {
         "domains": 2,
         "suffixes": 4,
@@ -1488,8 +1487,8 @@
     },
     "metacubex-service-github": {
       "json_size": 2439,
-      "srs_size": 689,
-      "sha256_srs": "837ad1a97c3a281e0353ca5dbe348dcead13afa0b43bf6051c34e445aca61650",
+      "srs_size": 692,
+      "sha256_srs": "66f7429acc1054306eda75a3e674085754df5ed221685f866d2fd05e33617d7c",
       "stats": {
         "domains": 28,
         "suffixes": 31,
@@ -1505,8 +1504,8 @@
     },
     "metacubex-service-gitlab": {
       "json_size": 255,
-      "srs_size": 123,
-      "sha256_srs": "1975b37e61d1ab97ba4efe95dccfe7bfeb50b0dcc6b25e80e3fe1e07e321349c",
+      "srs_size": 126,
+      "sha256_srs": "2f99efe3f68d03671c168101c8a33aeabfb3e58f761a92e7e8aa804badcd8909",
       "stats": {
         "domains": 1,
         "suffixes": 4,
@@ -1522,8 +1521,8 @@
     },
     "metacubex-service-google-gemini": {
       "json_size": 1491,
-      "srs_size": 478,
-      "sha256_srs": "52303e8ca8f9e68a4c7cfaf4510ee90b3f1fc2c0297c8ffc4590df37be20fc4f",
+      "srs_size": 481,
+      "sha256_srs": "9f90dbb61fd2d210a956c07fe754878571bee477c892911571e849af68f41e4a",
       "stats": {
         "domains": 11,
         "suffixes": 30,
@@ -1539,8 +1538,8 @@
     },
     "metacubex-service-google-play": {
       "json_size": 497,
-      "srs_size": 217,
-      "sha256_srs": "beafb1731aa534157ab9be7bbebf2f4c711b6ccdfdb1f2335bcdd621a03920cc",
+      "srs_size": 220,
+      "sha256_srs": "646adc5da39b1a1373c7feb0a5c480dc9807d3a63392e7ace7c93364fdf531e1",
       "stats": {
         "domains": 0,
         "suffixes": 7,
@@ -1556,8 +1555,8 @@
     },
     "metacubex-service-google": {
       "json_size": 21024,
-      "srs_size": 6214,
-      "sha256_srs": "653cb13c4e1a213a2a2bd13c146a54022d7a73fe6f1200b871a266a91290fba6",
+      "srs_size": 6240,
+      "sha256_srs": "a1e1d91c6a12e06fa3abeb828cb7ad14b1c3b085a8d149de277b80ed888e0b12",
       "stats": {
         "domains": 19,
         "suffixes": 827,
@@ -1573,8 +1572,8 @@
     },
     "metacubex-service-huggingface": {
       "json_size": 144,
-      "srs_size": 66,
-      "sha256_srs": "d36a543c925af874f6d220b3103dfe393c412b68c2e759454db76d713a88a42b",
+      "srs_size": 69,
+      "sha256_srs": "5b281328abcc078fa081cd9799a556da569bcf8d1f68436ffdacc90a02589b6e",
       "stats": {
         "domains": 0,
         "suffixes": 3,
@@ -1590,8 +1589,8 @@
     },
     "metacubex-service-icloud": {
       "json_size": 1398,
-      "srs_size": 484,
-      "sha256_srs": "2e682760460aa8925b50ebd7c3e03bdd0d736168964d4aeeeeafc1acd5a1900f",
+      "srs_size": 487,
+      "sha256_srs": "ebc8deafa0cfcb75c2c47119cc0d808b821e52b20f6744b6f552ca3dd804e92b",
       "stats": {
         "domains": 1,
         "suffixes": 52,
@@ -1607,8 +1606,8 @@
     },
     "metacubex-service-microsoft": {
       "json_size": 17785,
-      "srs_size": 6024,
-      "sha256_srs": "f0ab378945444b4927a739913938d3f34e03a7b5025bbdcb9186fbbd06b1dbbe",
+      "srs_size": 6032,
+      "sha256_srs": "a86d4cbcfddbd3c20bba8e1a569b831d758b052f0318af014158b1ef2e3145ad",
       "stats": {
         "domains": 16,
         "suffixes": 621,
@@ -1624,8 +1623,8 @@
     },
     "metacubex-service-netflix": {
       "json_size": 1066,
-      "srs_size": 341,
-      "sha256_srs": "d55e87205fd441e4b15ade1be7ec770fe61162c23828164eb736f655474b64af",
+      "srs_size": 344,
+      "sha256_srs": "40c5f50c80ceaba2a5e0b5c5760c9c5fce0b08498501397d8264dcae2aeeda53",
       "stats": {
         "domains": 1,
         "suffixes": 23,
@@ -1641,8 +1640,8 @@
     },
     "metacubex-service-notion": {
       "json_size": 260,
-      "srs_size": 122,
-      "sha256_srs": "8975c2e8b188c69a0bcc7d27a12d605cc4656c7f811aafbdecb4c66bec850643",
+      "srs_size": 126,
+      "sha256_srs": "5888ab752aa9b2b52ef0e77bbd6888013f2c80903feb411a69ff3a09dd837b6a",
       "stats": {
         "domains": 0,
         "suffixes": 7,
@@ -1658,8 +1657,8 @@
     },
     "metacubex-service-npmjs": {
       "json_size": 148,
-      "srs_size": 72,
-      "sha256_srs": "6b758a2adb382d1e7f38ddb8265c5f44ed2f8a2ee72b285ba3199b92b45faa4d",
+      "srs_size": 76,
+      "sha256_srs": "1d4f9228d3a0af89a5ddcfedad52cc059efc61cffa4fccb70d78df88e1553c3c",
       "stats": {
         "domains": 0,
         "suffixes": 3,
@@ -1675,8 +1674,8 @@
     },
     "metacubex-service-openai": {
       "json_size": 952,
-      "srs_size": 431,
-      "sha256_srs": "4455afa8a836684c8525bd3cc301245039f7cc1988bb41953cd5835a88b2f009",
+      "srs_size": 435,
+      "sha256_srs": "d2c8fffc93d82084c4a01955891195cb7df84e1a804200de9e41868ac99e723b",
       "stats": {
         "domains": 9,
         "suffixes": 13,
@@ -1692,8 +1691,8 @@
     },
     "metacubex-service-reddit": {
       "json_size": 395,
-      "srs_size": 178,
-      "sha256_srs": "debb420ba0d439c19493cf5a8c1a910f649c5600e260fe96b6b2c5a8c881480b",
+      "srs_size": 181,
+      "sha256_srs": "4677ea3324d082ca9a47c2bae79f27f04fdf008e1a5946ec6a4485887559b521",
       "stats": {
         "domains": 0,
         "suffixes": 12,
@@ -1709,8 +1708,8 @@
     },
     "metacubex-service-slack": {
       "json_size": 360,
-      "srs_size": 160,
-      "sha256_srs": "2e804a065f0554821a062def38d56a97cbef73059b500d9fd439d715ad764380",
+      "srs_size": 163,
+      "sha256_srs": "e46249bbc512ca3c5c1f49a83c2fb477e4dafeeffcc3b675710298c33d219782",
       "stats": {
         "domains": 0,
         "suffixes": 11,
@@ -1726,8 +1725,8 @@
     },
     "metacubex-service-speedtest": {
       "json_size": 593,
-      "srs_size": 283,
-      "sha256_srs": "73ad7df632084597a5ccfe6fb1d820f80283ceb547baa5a1ffd9ee3c21e56d5b",
+      "srs_size": 286,
+      "sha256_srs": "f55bbb72eb6e8e660eb02524add4430c36643b3c0d55948fc469342acf8a2781",
       "stats": {
         "domains": 1,
         "suffixes": 12,
@@ -1743,8 +1742,8 @@
     },
     "metacubex-service-spotify": {
       "json_size": 897,
-      "srs_size": 359,
-      "sha256_srs": "ad4b9b8c02b5f8e08babcd733899b53e13ae1cb2d3100dc3d7c8465191b8c589",
+      "srs_size": 362,
+      "sha256_srs": "0e187c6c538b48975f07f9668388bf25e1bae43cf8cce2e82396cbb0a7ac94ea",
       "stats": {
         "domains": 8,
         "suffixes": 17,
@@ -1760,8 +1759,8 @@
     },
     "metacubex-service-telegram": {
       "json_size": 564,
-      "srs_size": 245,
-      "sha256_srs": "8c6493d282bd60c75ea6fef5bc4c2e670ff0364c594650da03c1278eb4b5ca89",
+      "srs_size": 248,
+      "sha256_srs": "30cd392b1d79b0569af077874b36c6892bf13a94dce0d8e4410c3b1976d62ea2",
       "stats": {
         "domains": 0,
         "suffixes": 21,
@@ -1777,8 +1776,8 @@
     },
     "metacubex-service-tencent": {
       "json_size": 13449,
-      "srs_size": 3710,
-      "sha256_srs": "84be11f94b279fe331e18032adff920c61d0747dc5c1c11d5a155a2015639689",
+      "srs_size": 3722,
+      "sha256_srs": "355479aaf179d3c872aed6793a0fc1c478061c444477ada4464d2d66992c4a08",
       "stats": {
         "domains": 0,
         "suffixes": 551,
@@ -1794,8 +1793,8 @@
     },
     "metacubex-service-twitter": {
       "json_size": 667,
-      "srs_size": 278,
-      "sha256_srs": "dfd01bfa9b231df074b9e4e5a11966ce8d8f1f6c69232e7392bc30ffea2ab015",
+      "srs_size": 284,
+      "sha256_srs": "a2da69babdc2441e8ac487ddf91a5259e4628de74f44bb9bcd6a2113841bac0f",
       "stats": {
         "domains": 0,
         "suffixes": 24,
@@ -1811,8 +1810,8 @@
     },
     "metacubex-service-whatsapp": {
       "json_size": 357,
-      "srs_size": 177,
-      "sha256_srs": "f1e14cf2980cccf9cf660e7ab2c7346cf345ddc8a3fed51fac953718d04ca856",
+      "srs_size": 180,
+      "sha256_srs": "69c3a413c97070f9db7ea836c48998217e2fbfb2535b887e312424da843554a3",
       "stats": {
         "domains": 0,
         "suffixes": 11,
@@ -1828,8 +1827,8 @@
     },
     "metacubex-service-win-update": {
       "json_size": 15869,
-      "srs_size": 1546,
-      "sha256_srs": "2ba54a2555eecd9b001e26e4245737032250afc1c8cbb896aa9e84c973bf4f71",
+      "srs_size": 1553,
+      "sha256_srs": "347521beae83ed80156862be5971abe05086d5adbecefbc9257654a8f55d0293",
       "stats": {
         "domains": 0,
         "suffixes": 364,
@@ -1845,8 +1844,8 @@
     },
     "metacubex-service-xai": {
       "json_size": 165,
-      "srs_size": 74,
-      "sha256_srs": "6dbb901c30512a3007a147a2b65e3e094ccb2bd5eadc430f5e903f18c6fc607e",
+      "srs_size": 77,
+      "sha256_srs": "88b662b6ecf53728a581f18e296ed67c4cc5a85230d44a0c1a8ca436c1e7374d",
       "stats": {
         "domains": 0,
         "suffixes": 4,
@@ -1862,8 +1861,8 @@
     },
     "metacubex-service-youtube": {
       "json_size": 4428,
-      "srs_size": 1135,
-      "sha256_srs": "ed86e06c4d1d3fe4847245efcf06d433f31535af70ab098f69c3eee0775fb961",
+      "srs_size": 1147,
+      "sha256_srs": "c0536fe1195a661bce0c603686291e36b5465d0f8b046ee562180beeb2eaa20b",
       "stats": {
         "domains": 1,
         "suffixes": 176,
@@ -1879,8 +1878,8 @@
     },
     "sukka-chatgpt-voice": {
       "json_size": 803,
-      "srs_size": 208,
-      "sha256_srs": "abdc735a38b61abebb2e7bcf6309e01303432b93b04f6f4db87fb2f119b16440",
+      "srs_size": 211,
+      "sha256_srs": "7303a00ed1301d5e22af9154a54d114baa73a8563897ce55731e4c4148a0086d",
       "stats": {
         "domains": 0,
         "suffixes": 1,
@@ -1896,8 +1895,8 @@
     },
     "yuu-geosite-ai": {
       "json_size": 2153,
-      "srs_size": 881,
-      "sha256_srs": "c1ef7ba577d3bacc489b04012080f5f7f0ebaf9b13d9dc0bd5fc10a6e9e68bf0",
+      "srs_size": 884,
+      "sha256_srs": "8e7d51bd9f4aa4d3e0fb749fb3da9b6a94e1fb515b430e0b41ff3d8420e0612c",
       "stats": {
         "domains": 14,
         "suffixes": 50,
@@ -1913,8 +1912,8 @@
     },
     "yuu-geosite-pcdn-cn": {
       "json_size": 978,
-      "srs_size": 347,
-      "sha256_srs": "e42915ebc602dd3dc5089cd89c8b3ed2ef00dcb219871b9cf019279f68bb8810",
+      "srs_size": 350,
+      "sha256_srs": "01ca1086c22413750b988f81fee1738946a45140d19dbe045376e856441df433",
       "stats": {
         "domains": 0,
         "suffixes": 31,
@@ -1930,8 +1929,8 @@
     },
     "yuu-geosite-stream-global": {
       "json_size": 19509,
-      "srs_size": 6103,
-      "sha256_srs": "efa5e8b5eab94e134017b29fcd8445db7cda4992d006bf944e093cf14a3797bf",
+      "srs_size": 6107,
+      "sha256_srs": "c20d515f60a69faca10074a042cdb2281cddf300f0c6e04646c87bc92bbbdd4a",
       "stats": {
         "domains": 44,
         "suffixes": 691,

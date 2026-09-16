@@ -1,48 +1,38 @@
 name: Update Upstream Rulesets
-
 on:
   schedule:
-    - cron: "0 3 * * 0" # Every Sunday at 03:00 UTC
+    - cron: '0 3 * * 0'
   workflow_dispatch:
-
+permissions:
+  contents: write
+  pull-requests: write
+concurrency:
+  group: rules-upstream-update
+  cancel-in-progress: false
 jobs:
   update:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
         with:
-          python-version: "3.12"
-
-      - name: Install sing-box
+          persist-credentials: false
+      - run: bash scripts/install-compiler.sh
+      - name: Fetch and validate complete candidate
         run: |
-          SING_BOX_VERSION="1.11.4"
-          curl -fsSL "https://github.com/SagerNet/sing-box/releases/download/v${SING_BOX_VERSION}/sing-box-${SING_BOX_VERSION}-linux-amd64.tar.gz" -o sing-box.tar.gz
-          tar -xzf sing-box.tar.gz
-          sudo mv "sing-box-${SING_BOX_VERSION}-linux-amd64/sing-box" /usr/local/bin/sing-box
-
-      - name: Fetch upstream and rebuild
-        run: |
+          set -euo pipefail
           python3 scripts/fetch_upstream.py
           python3 scripts/builder.py
-
-      - name: Run test suite
-        run: |
+          python3 scripts/builder.py --check
           python3 -m unittest discover tests -v
-
-      - name: Commit and push changes
-        run: |
-          if [ -n "$(git status --porcelain)" ]; then
-            git config user.name "github-actions[bot]"
-            git config user.email "github-actions[bot]@users.noreply.github.com"
-            git add dist/ sources/
-            git commit -m "chore(rules): automated upstream refresh and optimization"
-            git push origin main
-          else
-            echo "No changes detected."
-          fi
+      - name: Propose reviewed update, never bypass main
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1
+        with:
+          branch: automation/upstream-rules
+          title: 'chore(rules): refresh verified upstream rule sets'
+          commit-message: 'chore(rules): refresh verified upstream rule sets'
+          body: 'Generated from upstream sources. Build, read-only reproducibility and matching tests ran in this workflow; review routing changes before merging.'
+          add-paths: |
+            sources/
+            sources_binary/
+            dist/
