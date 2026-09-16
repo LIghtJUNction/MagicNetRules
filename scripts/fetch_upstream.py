@@ -145,18 +145,30 @@ def fetch_one(name: str, binary: bool, commits: dict, stage: Path, compiler: str
     else:
         if len(data) < 4 or data[:3] != b"SRS":
             raise ValueError(f"Invalid SRS header: {name}")
-        raw = stage / "raw" / f"{name}.srs"
-        raw.write_bytes(data)
-        decoded = stage / "raw" / f"{name}.json" if binary else target
-        result = subprocess.run(
-            [compiler, "rule-set", "decompile", str(raw), "--output", str(decoded)],
-            capture_output=True, text=True, timeout=120,
-        )
-        if result.returncode:
-            raise RuntimeError(f"Cannot decode {name}: {result.stderr[:4000]}")
-        validate_json(decoded)
         if binary:
+            # AdGuard binary matchers are intentionally not reversible to JSON.
+            # check constructs the local rule-set and parses its actual SRS data.
             target.write_bytes(data)
+            check = stage / "raw" / f"{name}.check.json"
+            check.write_text(json.dumps({
+                "log": {"disabled": True},
+                "outbounds": [{"type": "direct", "tag": "direct"}],
+                "route": {
+                    "rule_set": [{"type": "local", "tag": "validate-source",
+                                  "format": "binary", "path": str(target)}],
+                    "rules": [{"rule_set": ["validate-source"], "outbound": "direct"}],
+                },
+            }))
+            command = [compiler, "check", "-c", str(check)]
+        else:
+            raw = stage / "raw" / f"{name}.srs"
+            raw.write_bytes(data)
+            command = [compiler, "rule-set", "decompile", str(raw), "--output", str(target)]
+        result = subprocess.run(command, capture_output=True, text=True, timeout=120)
+        if result.returncode:
+            raise RuntimeError(f"Cannot validate {name}: {result.stderr[:4000]}")
+        if not binary:
+            validate_json(target)
     print(f"Fetched and validated {name}", flush=True)
     return {"name": name, "url": url, "sha256": hashlib.sha256(data).hexdigest(),
             "bytes": len(data), "binary_only": binary}
