@@ -1,5 +1,12 @@
 name: Build and Publish Rules
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'config/**'
+      - 'scripts/**'
+      - 'tests/**'
+      - '.github/workflows/release.yml'
   schedule:
     - cron: '23 */6 * * *'
   workflow_dispatch:
