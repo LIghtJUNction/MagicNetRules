@@ -1,49 +1,38 @@
 name: Release
-
 on:
   push:
-    tags:
-      - "v*"
+    tags: ['v*']
   workflow_dispatch:
-
+permissions:
+  contents: read
 jobs:
   release:
-    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
     permissions:
       contents: write
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
         with:
-          python-version: "3.12"
-
-      - name: Install sing-box
+          persist-credentials: false
+      - run: bash scripts/install-compiler.sh
+      - name: Reject stale checked-in release inputs
         run: |
-          SING_BOX_VERSION="1.11.4"
-          curl -fsSL "https://github.com/SagerNet/sing-box/releases/download/v${SING_BOX_VERSION}/sing-box-${SING_BOX_VERSION}-linux-amd64.tar.gz" -o sing-box.tar.gz
-          tar -xzf sing-box.tar.gz
-          sudo mv "sing-box-${SING_BOX_VERSION}-linux-amd64/sing-box" /usr/local/bin/sing-box
-
-      - name: Build rule-sets
-        run: |
-          python3 scripts/builder.py
-
-      - name: Run tests
-        run: |
+          set -euo pipefail
+          python3 scripts/builder.py --check
           python3 -m unittest discover tests -v
-
-      - name: Package release assets
+          git diff --exit-code
+      - name: Package one runtime bundle
         run: |
-          tar -czvf magicnet-rules.tar.gz -C dist .
-          zip -r magicnet-rules.zip dist/
-
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: |
-            magicnet-rules.tar.gz
-            magicnet-rules.zip
-            dist/manifest.json
+          set -euo pipefail
+          mkdir -p release
+          (cd dist && tar --sort=name --mtime=@0 --owner=0 --group=0 --numeric-owner -cf - -- *.srs manifest.json) | gzip -n -9 > release/magicnet-rules.tar.gz
+          (cd release && sha256sum magicnet-rules.tar.gz > SHA256SUMS)
+      - name: Publish immutable tag bundle
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          gh release create "$TAG" --verify-tag --title "MagicNetRules $TAG" --generate-notes release/magicnet-rules.tar.gz release/SHA256SUMS
