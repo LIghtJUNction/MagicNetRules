@@ -79,7 +79,9 @@
     "license_path": "LICENSE",
     "min_entries": 5,
     "max_entries": 10000,
-    "omit_types": []
+    "omit_types": [
+      "IP-ASN"
+    ]
   },
   "blackmatrix-github": {
     "repository": "blackmatrix7/ios_rule_script",
