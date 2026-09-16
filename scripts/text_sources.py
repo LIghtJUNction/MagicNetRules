@@ -42,18 +42,22 @@ def load_registry(path: Path = ROOT / "config/text-sources.json") -> dict:
         if (not isinstance(omitted, list) or not set(omitted) <= OMITTABLE
                 or (omitted and spec["format"] != "clash-domain")):
             raise ValueError(f"Invalid projection: {name}")
+        tlds = spec.get("allow_tlds", [])
+        if (not isinstance(tlds, list) or (tlds and spec["format"] != "dnsmasq")
+                or any(not isinstance(tld, str) or "." in tld or domain("check." + tld) != "check." + tld for tld in tlds)):
+            raise ValueError(f"Invalid explicit TLD allowance: {name}")
         if not isinstance(spec.get("license"), str) or not spec["license"]:
             raise ValueError(f"Missing license: {name}")
     return registry
 
 
-def domain(value: str) -> str:
+def domain(value: str, *, allow_tlds: tuple[str, ...] = ()) -> str:
     """Canonicalize DNS names, never turn hosts/URLs/wildcards into suffixes."""
     if value != value.strip() or value.endswith("..") or any(c.isspace() for c in value):
         raise ValueError(f"Invalid domain: {value!r}")
     value = value.rstrip(".").encode("idna").decode("ascii").lower()
     labels = value.split(".")
-    if (len(value) > 253 or len(labels) < 2 or labels[-1].isdigit()
+    if (len(value) > 253 or (len(labels) < 2 and value not in allow_tlds) or labels[-1].isdigit()
             or any(not re.fullmatch(r"[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?", label) for label in labels)):
         raise ValueError(f"Invalid domain: {value!r}")
     return value
@@ -106,7 +110,7 @@ def parse_text(data: bytes, spec: dict) -> tuple[dict, dict]:
                 if not match:
                     raise ValueError("Unsupported dnsmasq directive")
                 ipaddress.ip_address(match[2])
-                field, value = "domain_suffix", domain(match[1])
+                field, value = "domain_suffix", domain(match[1], allow_tlds=tuple(spec.get("allow_tlds", [])))
             elif fmt.startswith("cidr"):
                 if "/" not in line:
                     raise ValueError("Expected a CIDR prefix")
