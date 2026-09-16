@@ -2,6 +2,7 @@
 
 import json
 import shutil
+import re
 import subprocess
 import unittest
 from pathlib import Path
@@ -23,7 +24,7 @@ class ParityTests(unittest.TestCase):
     def setUpClass(cls):
         cls.core = shutil.which("sing-box")
         if not cls.core:
-            raise unittest.SkipTest("sing-box binary not found in PATH")
+            raise RuntimeError("sing-box is required: install the pinned compiler before running integration tests")
         cls.config = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
 
     def match(self, rule_name: str, target: str) -> bool:
@@ -31,7 +32,8 @@ class ParityTests(unittest.TestCase):
         cmd = [self.core, "rule-set", "match", "-f", "binary", str(path), target]
         proc = subprocess.run(cmd, capture_output=True, text=True, timeout=10)
         output = proc.stdout.strip() or proc.stderr.strip()
-        return "match rules" in output or "matched" in output
+        self.assertEqual(proc.returncode, 0, f"Rule matching failed: {output}")
+        return re.search(r"^match rules\.\[[0-9]+\]:", output, re.MULTILINE) is not None
 
     def test_merged_ruleset_parity_with_sources(self):
         """Verify that representative items from constituent sources match the merged rule set."""
@@ -42,13 +44,12 @@ class ParityTests(unittest.TestCase):
             sample_cidrs = []
             for src in sources:
                 src_path = SOURCES_DIR / f"{src}.json"
-                if not src_path.is_file():
-                    continue
+                self.assertTrue(src_path.is_file(), f"Missing required source: {src_path.name}")
                 data = json.loads(src_path.read_text(encoding="utf-8"))
                 for rule in data.get("rules", []):
                     suffixes = as_list(rule.get("domain_suffix"))
                     if suffixes:
-                        sample_domains.append(suffixes[0])
+                        sample_domains.append("probe" + suffixes[0] if suffixes[0].startswith(".") else suffixes[0])
                     domains = as_list(rule.get("domain"))
                     if domains:
                         sample_domains.append(domains[0])
