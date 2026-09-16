@@ -1,15 +1,18 @@
-name: Release
+name: Build and Publish Rules
 on:
-  push:
-    tags: ['v*']
+  schedule:
+    - cron: '23 */6 * * *'
   workflow_dispatch:
 permissions:
   contents: read
+concurrency:
+  group: rules-release
+  cancel-in-progress: false
 jobs:
   release:
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: github.repository == 'LIghtJUNction/MagicNetRules' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 30
     permissions:
       contents: write
     steps:
@@ -17,22 +20,18 @@ jobs:
         with:
           persist-credentials: false
       - run: bash scripts/install-compiler.sh
-      - name: Reject stale checked-in release inputs
+      - name: Fetch, compile and verify a complete snapshot
         run: |
           set -euo pipefail
+          test -z "$(git ls-files -- dist sources sources_binary release .cache)"
+          python3 scripts/fetch_upstream.py
+          python3 scripts/builder.py
           python3 scripts/builder.py --check
           python3 -m unittest discover tests -v
+          python3 scripts/package_release.py
           git diff --exit-code
-      - name: Package one runtime bundle
-        run: |
-          set -euo pipefail
-          mkdir -p release
-          (cd dist && tar --sort=name --mtime=@0 --owner=0 --group=0 --numeric-owner -cf - -- *.srs manifest.json) | gzip -n -9 > release/magicnet-rules.tar.gz
-          (cd release && sha256sum magicnet-rules.tar.gz > SHA256SUMS)
-      - name: Publish immutable tag bundle
+          test -z "$(git status --porcelain)"
+      - name: Publish only changed, fully verified release assets
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG: ${{ github.ref_name }}
-        run: |
-          set -euo pipefail
-          gh release create "$TAG" --verify-tag --title "MagicNetRules $TAG" --generate-notes release/magicnet-rules.tar.gz release/SHA256SUMS
+        run: bash scripts/publish-release.sh

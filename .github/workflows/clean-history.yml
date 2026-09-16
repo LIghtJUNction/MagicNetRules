@@ -1,0 +1,35 @@
+name: Remove Generated Files from History
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/clean-history.yml']
+  workflow_dispatch:
+    inputs:
+      expected_main:
+        description: 'Exact reviewed main SHA; abort if main has moved'
+        required: true
+        type: string
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: rules-release
+  cancel-in-progress: false
+jobs:
+  cleanup:
+    if: github.repository == 'LIghtJUNction/MagicNetRules' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          ref: ${{ inputs.expected_main || github.sha }}
+          fetch-depth: 0
+      - name: Rewrite all writable refs with atomic force-with-lease
+        env:
+          EXPECTED_MAIN: ${{ inputs.expected_main || github.sha }}
+        run: bash scripts/clean-history.sh
+      - name: Build the first Release from rewritten main
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run release.yml --ref main

@@ -1,8 +1,10 @@
 __pycache__/
 *.py[cod]
-*$py.class
-.pytest_cache/
-.ruff_cache/
-*.tmp
-*.log
-*.metadata.json
+/dist/
+/sources/
+/sources_binary/
+/release/
+/.cache/
+/.rules-build-*/
+/.upstream-*/
+/.release-*/
