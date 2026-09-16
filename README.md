@@ -1,111 +1,57 @@
 # MagicNetRules
 
-**MagicNetRules** 是专为 [MagicNet](https://github.com/LIghtJUNction/MagicNet) 量身打造的高性能、自动化 sing-box 规则集系统。
+MagicNet 的 sing-box 规则构建配方。仓库只保存脚本、源清单、配置和测试；下载源与产物不进入 Git。
 
-集成、去重、优化并合并了各大上游优质规则源（MetaCubeX、lyc8503、KaringX、HaGeZi、SukkaLab、DDCH 等），提供紧凑高效的编译二进制规则集（`.srs`）与结构化 JSON 源规则文件。
+## 获取规则
 
----
+分发文件只在本仓库的 GitHub Releases 中提供：
 
-## 核心特性
+- `magicnet-rules.tar.gz`：单个运行时归档，包含分类 SRS 和 `manifest.json`。
+- `magicnet-rules-sources.tar.gz`：本次构建的源快照、配置、编译配方，供审计和复现。
+- `upstream-manifest.json`：上游提交、下载 URL、大小和 SHA-256。
+- `SHA256SUMS`：以上资产的校验和。
 
-- **高效去重与剪枝 (Deduplication & Trie Pruning)**：
-  - **后缀树剪枝**：基于反向域名字典树（Reverse Domain Trie）消除同名及多级子后缀冗余（例如已有 `example.com` 后缀，自动剔除冗余的 `sub.example.com` 后缀与 `*.example.com` 精确域名）。
-  - **精准域名消冗**：凡已被 `domain_suffix` 涵盖的 `domain` 规则均自动剥离，缩小规则条目数；设备内存占用需另行测量。
-- **IP CIDR 智能归并 (CIDR Subnet Collapsing)**：
-  - 基于 `ipaddress.collapse_addresses` 算法自动合并重叠与连续的 IPv4/IPv6 子网。实际减少量由构建输出统计，不据此承诺设备内存或延迟改善。
-- **全量集成与分类合并 (Rule Set Consolidation)**：
-  - **合并规则集 (Consolidated)**：将原本分散的数十个分散规则合并为高聚合的业务规则集（如 `magicnet-cn-domain`、`magicnet-cn-ip`、`magicnet-adblock`、`magicnet-media`、`magicnet-dev`、`magicnet-ai` 等）。使用方需要显式引用合并后的分类，仓库生成文件本身不会改变运行时配置。
-  - **独立服务规则集 (Dedicated Services)**：为 OpenAI、Claude、Gemini、Grok、Google、YouTube、GitHub、Discord、Telegram、Twitter、WhatsApp、Netflix、Spotify 等保持高优先级独立规则，便于独立分流选择。
-  - **保留旧文件名 (Legacy Names)**：完整保留原始命名规范的独立规则集，供现有配置按文件名引用；兼容性以编译、匹配和设备验收为准。
-- **完整 CI/CD 与自动化测试**：
-  - GitHub Actions 自动化编译与测试流水线（架构校验、去重校验、SRS 编译校验、sing-box 真实流量匹配测试、数据一致性 Parity 测试）。
-  - 定时自动化上游规则刷新与版本发布。
+最新运行时归档：
+`https://github.com/LIghtJUNction/MagicNetRules/releases/latest/download/magicnet-rules.tar.gz`
 
----
+正式构建需要可复现时，使用 Release 的具体 tag，不要固定一个可能更新的 latest 地址。下载失败、缺文件、校验不符均应停止构建，不能静默换成旧规则。
 
-## 规则集结构
+all-in-one 指一次分发的归档，不是把直连、代理、拦截规则混成一个无分类的 SRS。现有分类及兼容文件名由 `config/rulesets.json` 定义。
 
-### 1. 合并规则集 (Consolidated Rulesets)
+## 构建
 
-| 规则名称 (`dist/*.srs`) | 包含上游源 | 说明 |
-| :--- | :--- | :--- |
-| `magicnet-cn-domain` | MetaCubeX CN, lyc8503 CN, KaringX ChinaDomain, Tencent, WeChat, Bing CN | 大陆域名、腾讯、微信、国内直连服务全集 |
-| `magicnet-cn-ip` | MetaCubeX GeoIP CN, lyc8503 GeoIP CN, KaringX China IP | 大陆 IP 段全集（经 CIDR 聚合压缩） |
-| `magicnet-adblock` | lyc8503 Geosite Ads, KaringX BanAD | 广告拦截与隐私追踪防护规则 |
-| `magicnet-dev` | MetaCubeX Dev, Docker, GitHub, GitLab, HuggingFace, NPM | 开发者平台、容器与代码仓库 |
-| `magicnet-media` | MetaCubeX Media, Entertainment, Yuu Stream Global, Karing Media | 国际流媒体与影音娱乐 |
-| `magicnet-social` | Social Media, Communication, Notion, Slack, Reddit | 国际社交媒体与协同通讯 |
-| `magicnet-download` | Game Platforms Download, Windows Update, Apple Update | 游戏大文件下载与系统更新 |
-| `magicnet-games` | MetaCubeX Games !cn | 国际游戏联机与平台 |
-| `magicnet-ai` | Category AI !cn, Yuu AI, Karing AI | 综合 AI 与大模型服务 |
-| `magicnet-dns-guard` | Category DoH, IP Geo Detect | 加密 DNS 与地理位置探测分流 |
-| `magicnet-network-test` | Connectivity Check, Speedtest | 网络连通性与测速服务 |
-| `magicnet-proxy` | Geolocation !cn, GFWList, Proxy Lite | 国际通用代理与 GFW 名单 |
-
-### 2. 独立服务分流规则集 (Dedicated Service Rulesets)
-
-- `service-openai` / `sukka-chatgpt-voice`
-- `service-anthropic` (Claude)
-- `service-google-gemini`
-- `service-xai` (Grok)
-- `service-google` / `service-google-play` / `service-youtube`
-- `service-github` / `service-discord` / `service-telegram`
-- `service-twitter` / `service-whatsapp`
-- `service-netflix` / `service-spotify`
-- `service-apple` / `service-icloud` / `service-microsoft` / `service-bing`
-
----
-
-## 本地开发与测试
-
-### 环境依赖
-
-- Python 3.10+
-- [sing-box](https://github.com/SagerNet/sing-box) (已安装于 PATH 中)
-
-### 构建与编译
+需要 Python 3.10+、Git、curl，以及校验和固定的 sing-box 编译器：
 
 ```bash
-# 运行构建引擎：自动优化、去重、合并并编译为 .srs 与 .json
+export SING_BOX_INSTALL_DIR="$PWD/.cache/tools"
+bash scripts/install-compiler.sh
+export PATH="$SING_BOX_INSTALL_DIR:$PATH"
+python3 scripts/fetch_upstream.py
 python3 scripts/builder.py
-
-# 仅校验 dist/ 是否为最新（不重新写入）
 python3 scripts/builder.py --check
-```
-
-### 运行测试套件
-
-```bash
 python3 -m unittest discover tests -v
+python3 scripts/package_release.py
+(cd release && sha256sum --check --strict SHA256SUMS)
 ```
 
-测试套件包含：
-1. `test_schema.py`: 校验所有规则集是否符合 sing-box schema 规范。
-2. `test_deduplication.py`: 严格断言不存在子域名冗余、同源重复项及未合并 CIDR。
-3. `test_compilation.py`: 验证所有规则均成功编译为非空有效二进制 `.srs` 文件。
-4. `test_matching.py`: 使用 `sing-box rule-set match` 检验常见服务真实解析匹配。
-5. `test_parity.py`: 抽样比对上游源规则与合并后规则的完整性。
+构建时解析每个上游分支一次，再按该提交下载全部所需文件；SukkaLab 的 HTTPS 源记录内容摘要。下载和解码全部成功后才替换输入快照，失败保留此前输入，但当前构建必须失败。编译器版本与 SHA-256 固定在 `scripts/install-compiler.sh`。
 
----
+`dist/`、`sources/`、`sources_binary/`、`release/`、`.cache/` 均为本地产物；CI 会拒绝将它们重新提交。`--check` 在临时目录重建并逐文件比较，不会修复被修改的输出。
 
-## CI 工作流
+## 自动更新
 
-- **`.github/workflows/ci.yml`**：每次 Push 与 PR 自动校验输出与测试套件。
-- **`.github/workflows/update-upstream.yml`**：每周定时从各上游拉取最新规则、自动重新构建优化，若有更新则创建 PR，不直接推送 main。
-- **`.github/workflows/release.yml`**：推送版本 tag 时打包生成 单个运行时归档 `magicnet-rules.tar.gz` 与 `SHA256SUMS` 发布 Release。
+`release.yml` 每六小时运行一次（UTC 00:23、06:23、12:23、18:23），也支持手动运行。流程为：拉取源 → 编译去重 → 重现性和匹配测试 → 打包 → 上传草稿 Release → 全部成功后发布。运行时内容未变化时不创建重复 Release；不再自动提交源文件或数据 PR。GitHub 的定时任务可能延迟，不是准点服务。
 
----
+`ci.yml` 对 PR 和 main 做全新源快照构建、测试与工作区检查。
 
-## 许可证
+## 历史清理
 
-[MIT License](LICENSE) © 2026 LIghtJUNction
+`clean-history.yml` 用于此次迁移，只有该工作流文件进入 main 或手动调用时运行，不参与定时更新。它要求 main 未发生并发更新，仅从所有可写分支和标签的历史中删除 `dist/`、`sources/`、`sources_binary/`，保留其他文件和提交信息，采用原子 `force-with-lease` 推送，不修改分支保护。
 
-## 合并边界与校验保证
+历史重写后，已有克隆应重新克隆；主项目必须更新 `rules` 子模块提交。GitHub 自己维护的 PR 引用、缓存和服务端对象回收不由 Git push 控制，因此不能把“重写分支/标签”当作所有旧对象已立即物理删除。
 
-all-in-one 指一个可校验、可一次分发的归档；其中仍保留不同路由用途的 SRS 分类。不能将直连、代理、拦截分类合成一个无标签的普通 SRS 后，仍期望 sing-box 知道原来的路由动作。`dist/` 中的 JSON 用于审计，不进入运行时归档。
+## 上游与许可证
 
-仅对无附加条件的域名/IP OR 规则做合并剪枝。端口、网络、逻辑组合与反选规则原样保留，未知格式交由固定版本编译器拒绝。`.example.com` 不覆盖顶级 `example.com`，正则空格不被清除，非法 CIDR 不被静默丢弃。
+源映射位于 `scripts/fetch_upstream.py`，包括 MetaCubeX、lyc8503、KaringX、Yuu518、DDCHlsq、razaxq/HaGeZi 和 SukkaLab。具体下载来源记录在每次 Release 的 provenance 清单中。
 
-构建先生成完整候选，编译失败保留原产物。`--check` 在临时目录重建并逐文件比较 JSON、SRS、清单和文件集合；缺失、多余、篡改均失败，不自动修复。清单不含每次变化的时间戳。集成测试缺少编译器时失败而不是跳过。
-
-CI 使用 `scripts/install-compiler.sh` 下载固定版本且 SHA-256 固定的构建工具；构建工具不会打进 Android 模块。
+本仓库构建代码使用 [MIT](LICENSE)；聚合的规则数据仍受各上游自己的许可证和署名要求约束，不能将其笼统视为本仓库的 MIT 数据。
