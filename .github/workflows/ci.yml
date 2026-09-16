@@ -13,17 +13,33 @@ concurrency:
 jobs:
   test:
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
         with:
           persist-credentials: false
-      - name: Install checksum-pinned compiler
-        run: bash scripts/install-compiler.sh
-      - name: Read-only reproducibility gate
+      - name: Reject generated files in Git
         run: |
           set -euo pipefail
+          tracked=$(git ls-files -- dist sources sources_binary release .cache)
+          if [ -n "$tracked" ]; then
+            printf 'Generated files must not be tracked:\n%s\n' "$tracked"
+            exit 1
+          fi
+      - name: Install checksum-pinned compiler
+        run: bash scripts/install-compiler.sh
+      - name: Fetch complete upstream snapshot and build
+        run: |
+          set -euo pipefail
+          python3 scripts/fetch_upstream.py
+          python3 scripts/builder.py
           python3 scripts/builder.py --check
-          git diff --exit-code
       - name: Behavioral, compilation and matching tests
         run: python3 -m unittest discover tests -v
+      - name: Verify distribution and clean working tree
+        run: |
+          set -euo pipefail
+          python3 scripts/package_release.py
+          (cd release && sha256sum --check --strict SHA256SUMS)
+          git diff --exit-code
+          test -z "$(git status --porcelain)"
