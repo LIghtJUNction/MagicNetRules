@@ -32,6 +32,12 @@ changing their meaning. This avoids turning an ASN or no-resolve rule into a
 broad unconditional route. The original list remains in the source archive.
 
 The dnsmasq adapter imports domain suffixes, not the upstream DNS server choice.
+DNS acceleration is not proof of route geography. Whole-TLD suffixes are therefore
+limited to the explicitly reviewed `cn` and `xn--fiqs8s` (.中国). The feed's broad
+`top`, `wang`, `xn--55qx5d` and `xn--io0a7i` entries are explicitly omitted and
+counted in `omitted_tlds`, while separately listed domains under them are kept.
+Any new unreviewed whole-TLD entry fails validation rather than expanding direct
+routing without review.
 IPv4/IPv6 sources are validated separately and reject private/default routes and
 noncanonical prefixes. HaGeZi's plain domain feed is deliberately imported as
 exact names: this conservative integration does not invent wildcard blocking

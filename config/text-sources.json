@@ -17,8 +17,12 @@
     ],
     "allow_tlds": [
       "cn",
+      "xn--fiqs8s"
+    ],
+    "omit_tlds": [
+      "top",
+      "wang",
       "xn--55qx5d",
-      "xn--fiqs8s",
       "xn--io0a7i"
     ]
   },

@@ -12,7 +12,7 @@ from text_sources import domain, load_registry, parse_text
 
 class TldProjectionTests(unittest.TestCase):
     def test_domestic_tlds_require_explicit_source_allowance(self):
-        allowed = ["cn", "xn--55qx5d", "xn--fiqs8s", "xn--io0a7i"]
+        allowed = ["cn", "xn--fiqs8s"]
         descriptor = {"format": "dnsmasq", "min_entries": 1, "max_entries": 100,
                       "allow_tlds": allowed}
         data = "".join(f"server=/{tld}/114.114.114.114\n" for tld in allowed).encode()
@@ -28,8 +28,25 @@ class TldProjectionTests(unittest.TestCase):
     def test_registry_has_only_reviewed_domestic_tlds(self):
         registry = load_registry()
         self.assertEqual(set(registry["felixonmars-cn"]["allow_tlds"]),
-                         {"cn", "xn--55qx5d", "xn--fiqs8s", "xn--io0a7i"})
+                         {"cn", "xn--fiqs8s"})
         self.assertEqual(registry["blackmatrix-wechat"]["omit_types"], ["IP-ASN"])
+
+    def test_generic_tlds_are_audited_not_directed_wholesale(self):
+        source = {**load_registry()["felixonmars-cn"], "min_entries": 1}
+        data = b"server=/cn/114.114.114.114\nserver=/top/114.114.114.114\nserver=/wang/114.114.114.114\nserver=/example.top/114.114.114.114\n"
+        doc, audit = parse_text(data, source)
+        self.assertEqual(doc["rules"], [{"domain_suffix": ["cn", "example.top"]}])
+        self.assertEqual(audit["omitted_tlds"], {"top": 1, "wang": 1})
+        with self.assertRaises(ValueError):
+            parse_text(b"server=/com/114.114.114.114", source)
+
+    def test_conflicting_tld_policies_fail(self):
+        source = {**load_registry()["felixonmars-cn"], "omit_tlds": ["cn"]}
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "registry.json"
+            path.write_text(json.dumps({"example": source}))
+            with self.assertRaisesRegex(ValueError, "Conflicting"):
+                load_registry(path)
 
     def test_registry_rejects_tld_allowance_in_other_formats(self):
         source = load_registry()["blackmatrix-github"]

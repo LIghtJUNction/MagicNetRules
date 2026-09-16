@@ -42,10 +42,13 @@ def load_registry(path: Path = ROOT / "config/text-sources.json") -> dict:
         if (not isinstance(omitted, list) or not set(omitted) <= OMITTABLE
                 or (omitted and spec["format"] != "clash-domain")):
             raise ValueError(f"Invalid projection: {name}")
-        tlds = spec.get("allow_tlds", [])
-        if (not isinstance(tlds, list) or (tlds and spec["format"] != "dnsmasq")
-                or any(not isinstance(tld, str) or "." in tld or domain("check." + tld) != "check." + tld for tld in tlds)):
-            raise ValueError(f"Invalid explicit TLD allowance: {name}")
+        for field in ("allow_tlds", "omit_tlds"):
+            tlds = spec.get(field, [])
+            if (not isinstance(tlds, list) or (tlds and spec["format"] != "dnsmasq")
+                    or any(not isinstance(tld, str) or "." in tld or domain("check." + tld) != "check." + tld for tld in tlds)):
+                raise ValueError(f"Invalid explicit TLD policy: {name}")
+        if set(spec.get("allow_tlds", [])) & set(spec.get("omit_tlds", [])):
+            raise ValueError(f"Conflicting TLD policy: {name}")
         if not isinstance(spec.get("license"), str) or not spec["license"]:
             raise ValueError(f"Missing license: {name}")
     return registry
@@ -76,6 +79,7 @@ def parse_text(data: bytes, spec: dict) -> tuple[dict, dict]:
         raise ValueError(f"Unsupported format: {fmt}")
     values: dict[str, set[str]] = {}
     skipped: dict[str, int] = {}
+    omitted_tlds: dict[str, int] = {}
     accepted = 0
     for number, raw in enumerate(data.decode("utf-8-sig").splitlines(), 1):
         line = raw.strip()
@@ -110,7 +114,11 @@ def parse_text(data: bytes, spec: dict) -> tuple[dict, dict]:
                 if not match:
                     raise ValueError("Unsupported dnsmasq directive")
                 ipaddress.ip_address(match[2])
-                field, value = "domain_suffix", domain(match[1], allow_tlds=tuple(spec.get("allow_tlds", [])))
+                reviewed = tuple(spec.get("allow_tlds", [])) + tuple(spec.get("omit_tlds", []))
+                field, value = "domain_suffix", domain(match[1], allow_tlds=reviewed)
+                if value in spec.get("omit_tlds", []):
+                    omitted_tlds[value] = omitted_tlds.get(value, 0) + 1
+                    continue
             elif fmt.startswith("cidr"):
                 if "/" not in line:
                     raise ValueError("Expected a CIDR prefix")
@@ -139,4 +147,5 @@ def parse_text(data: bytes, spec: dict) -> tuple[dict, dict]:
     return {"version": 2, "rules": [rule]}, {
         "format": fmt, "accepted_entries": accepted, "unique_entries": count,
         "duplicates_removed": accepted - count, "omitted_types": dict(sorted(skipped.items())),
+        "omitted_tlds": dict(sorted(omitted_tlds.items())),
     }
