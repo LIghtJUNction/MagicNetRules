@@ -78,7 +78,9 @@ def package(root: Path = ROOT) -> None:
         if folder.is_symlink():
             raise ValueError(f"Unsafe source directory: {directory}")
         audit.extend((path, f"{directory}/{path.name}") for path in sorted(folder.iterdir()))
-    for name in ("config/rulesets.json", "scripts/builder.py", "scripts/install-compiler.sh", "LICENSE"):
+    for name in ("config/rulesets.json", "config/text-sources.json", "scripts/builder.py",
+                 "scripts/fetch_upstream.py", "scripts/text_sources.py", "scripts/install-compiler.sh",
+                 "docs/primary-sources.md", "LICENSE"):
         audit.append((root / name, name))
     release = root / "release"
     if release.is_symlink():
