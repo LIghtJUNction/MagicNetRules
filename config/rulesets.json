@@ -11,7 +11,9 @@
         "karing-acl4ssr-wechat",
         "metacubex-service-bing@cn",
         "geosite-geolocation-cn",
-        "ddch-direct"
+        "ddch-direct",
+        "felixonmars-cn",
+        "blackmatrix-wechat"
       ]
     },
     "magicnet-cn-ip": {
@@ -19,14 +21,17 @@
       "sources": [
         "metacubex-geoip-cn",
         "geoip-cn",
-        "karing-acl4ssr-china-ip"
+        "karing-acl4ssr-china-ip",
+        "gaoyifan-cn-ipv4",
+        "gaoyifan-cn-ipv6"
       ]
     },
     "magicnet-adblock": {
       "description": "Aggregated advertising and tracking blocking rules",
       "sources": [
         "geosite-category-ads-all",
-        "karing-acl4ssr-banad"
+        "karing-acl4ssr-banad",
+        "hagezi-light-domains"
       ]
     },
     "magicnet-dev": {
@@ -38,7 +43,8 @@
         "metacubex-service-github",
         "metacubex-service-gitlab",
         "metacubex-service-huggingface",
-        "metacubex-service-npmjs"
+        "metacubex-service-npmjs",
+        "blackmatrix-github"
       ]
     },
     "magicnet-media": {
@@ -83,7 +89,8 @@
         "metacubex-service-category-ai-!cn",
         "geosite-category-ai-!cn",
         "yuu-geosite-ai",
-        "karing-acl4ssr-ai"
+        "karing-acl4ssr-ai",
+        "blackmatrix-openai"
       ]
     },
     "magicnet-dns-guard": {
@@ -115,7 +122,8 @@
   },
   "service_rulesets": {
     "service-openai": [
-      "metacubex-service-openai"
+      "metacubex-service-openai",
+      "blackmatrix-openai"
     ],
     "service-google-gemini": [
       "metacubex-service-google-gemini"
@@ -127,7 +135,9 @@
       "metacubex-service-anthropic"
     ],
     "service-google": [
-      "metacubex-service-google"
+      "metacubex-service-google",
+      "blackmatrix-google",
+      "blackmatrix-google-fcm"
     ],
     "service-google-play": [
       "metacubex-service-google-play"
@@ -136,7 +146,8 @@
       "metacubex-service-youtube"
     ],
     "service-github": [
-      "metacubex-service-github"
+      "metacubex-service-github",
+      "blackmatrix-github"
     ],
     "service-discord": [
       "metacubex-service-discord"
@@ -187,7 +198,8 @@
       "metacubex-service-tencent"
     ],
     "service-wechat": [
-      "karing-acl4ssr-wechat"
+      "karing-acl4ssr-wechat",
+      "blackmatrix-wechat"
     ]
   },
   "standalone_sources": [

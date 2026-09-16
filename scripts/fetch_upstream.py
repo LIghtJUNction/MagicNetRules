@@ -14,7 +14,10 @@ import urllib.error
 import urllib.request
 from pathlib import Path
 
+from text_sources import load_registry, parse_text
+
 ROOT = Path(__file__).resolve().parents[1]
+TEXT_SOURCES = load_registry()
 MAX_BYTES = 32 * 1024 * 1024
 NAME = re.compile(r"[a-z0-9_@!.-]+")
 VOICE_URL = "https://gitlab.com/SukkaW/ruleset.skk.moe/-/raw/master/sing-box/ip/ai.json"
@@ -29,6 +32,9 @@ def source_location(name: str) -> tuple[str, str, str]:
     """Return repository, branch, path. Inventory remains in rulesets.json."""
     if not NAME.fullmatch(name) or name in (".", ".."):
         raise ValueError(f"Unsafe source name: {name!r}")
+    if name in TEXT_SOURCES:
+        spec = TEXT_SOURCES[name]
+        return spec["repository"], spec["branch"], spec["path"]
     if name.startswith("metacubex-service-"):
         return "MetaCubeX/meta-rules-dat", "sing", f"geo/geosite/{name[18:]}.srs"
     special = {
@@ -66,6 +72,8 @@ def inventory(config: dict) -> tuple[list[str], list[str]]:
     for filename in binaries:
         if not filename.endswith(".srs"):
             raise ValueError(f"Invalid binary source: {filename}")
+        if filename[:-4] in TEXT_SOURCES:
+            raise ValueError(f"Text feed cannot be a binary passthrough: {filename}")
         source_location(filename[:-4])
         if filename[:-4] in names:
             raise ValueError(f"Source collision: {filename}")
@@ -132,6 +140,8 @@ def validate_json(path: Path) -> None:
 
 
 def fetch_one(name: str, binary: bool, commits: dict, stage: Path, compiler: str) -> dict:
+    if binary and name in TEXT_SOURCES:
+        raise ValueError(f"Text feed cannot be a binary passthrough: {name}")
     if name == "sukka-chatgpt-voice":
         url = VOICE_URL
     else:
@@ -139,7 +149,16 @@ def fetch_one(name: str, binary: bool, commits: dict, stage: Path, compiler: str
         url = f"https://raw.githubusercontent.com/{repo}/{commits[repo, branch]}/{path}"
     data = download(url)
     target = stage / ("sources_binary" if binary else "sources") / f"{name}{'.srs' if binary else '.json'}"
-    if name == "sukka-chatgpt-voice":
+    audit = {}
+    if name in TEXT_SOURCES:
+        document, audit = parse_text(data, TEXT_SOURCES[name])
+        target.write_text(json.dumps(document, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        validate_json(target)
+        # Exact original text is audit/source material, never a runtime artifact.
+        original = stage / "sources" / f"{name}.upstream.txt"
+        original.write_bytes(data)
+        audit.update({"license": TEXT_SOURCES[name]["license"], "original": f"sources/{original.name}"})
+    elif name == "sukka-chatgpt-voice":
         target.write_bytes(data)
         validate_json(target)
     else:
@@ -171,7 +190,7 @@ def fetch_one(name: str, binary: bool, commits: dict, stage: Path, compiler: str
             validate_json(target)
     print(f"Fetched and validated {name}", flush=True)
     return {"name": name, "url": url, "sha256": hashlib.sha256(data).hexdigest(),
-            "bytes": len(data), "binary_only": binary}
+            "bytes": len(data), "binary_only": binary, **audit}
 
 
 def install_snapshot(stage: Path, root: Path) -> None:
@@ -213,15 +232,29 @@ def main() -> None:
     names, binaries = inventory(config)
     jobs = [(name, False) for name in names] + [(name[:-4], True) for name in binaries]
     upstreams = sorted({source_location(name)[:2] for name, _ in jobs if name != "sukka-chatgpt-voice"})
+    licenses = sorted({(TEXT_SOURCES[name]["repository"], TEXT_SOURCES[name]["license_branch"],
+                        TEXT_SOURCES[name]["license_path"]) for name in names if name in TEXT_SOURCES})
+    upstreams = sorted(set(upstreams) | {(repo, branch) for repo, branch, _ in licenses})
     commits = {(repo, branch): resolve_commit(repo, branch) for repo, branch in upstreams}
     with tempfile.TemporaryDirectory(prefix=".upstream-", dir=ROOT) as temporary:
         stage = Path(temporary)
         for directory in ("sources", "sources_binary", "raw"):
             (stage / directory).mkdir()
+        license_records = []
+        for repo, branch, path in licenses:
+            url = f"https://raw.githubusercontent.com/{repo}/{commits[repo, branch]}/{path}"
+            data = download(url)
+            text = data.decode("utf-8")
+            if "<html" in text.lower() or "<!doctype" in text.lower() or len(text.strip()) < 100:
+                raise ValueError(f"Invalid license document: {repo}")
+            filename = f"{repo.replace('/', '--')}.LICENSE.txt"
+            (stage / "sources" / filename).write_bytes(data)
+            license_records.append({"repository": repo, "url": url, "file": f"sources/{filename}",
+                                    "sha256": hashlib.sha256(data).hexdigest()})
         with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
             futures = [pool.submit(fetch_one, name, binary, commits, stage, compiler) for name, binary in jobs]
             records = [future.result() for future in futures]
-        manifest = {"version": 1, "upstreams": [
+        manifest = {"version": 1, "licenses": license_records, "upstreams": [
             {"repository": repo, "branch": branch, "commit": commits[repo, branch]}
             for repo, branch in upstreams], "sources": sorted(records, key=lambda item: item["name"])}
         (stage / "upstream-manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")

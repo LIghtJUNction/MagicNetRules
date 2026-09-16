@@ -1,0 +1,132 @@
+{
+  "felixonmars-cn": {
+    "repository": "felixonmars/dnsmasq-china-list",
+    "branch": "master",
+    "path": "accelerated-domains.china.conf",
+    "format": "dnsmasq",
+    "license": "WTFPL",
+    "license_branch": "master",
+    "license_path": "LICENSE",
+    "min_entries": 1000,
+    "max_entries": 300000,
+    "must_not_match": [
+      "play.googleapis.com",
+      "android.clients.google.com",
+      "accounts.google.com",
+      "mtalk.google.com"
+    ]
+  },
+  "gaoyifan-cn-ipv4": {
+    "repository": "gaoyifan/china-operator-ip",
+    "branch": "ip-lists",
+    "path": "china.txt",
+    "format": "cidr4",
+    "license": "MIT",
+    "license_branch": "master",
+    "license_path": "LICENSE",
+    "min_entries": 1000,
+    "max_entries": 100000
+  },
+  "gaoyifan-cn-ipv6": {
+    "repository": "gaoyifan/china-operator-ip",
+    "branch": "ip-lists",
+    "path": "china6.txt",
+    "format": "cidr6",
+    "license": "MIT",
+    "license_branch": "master",
+    "license_path": "LICENSE",
+    "min_entries": 100,
+    "max_entries": 100000
+  },
+  "blackmatrix-google": {
+    "repository": "blackmatrix7/ios_rule_script",
+    "branch": "master",
+    "path": "rule/Clash/Google/Google.list",
+    "format": "clash-domain",
+    "license": "GPL-2.0",
+    "license_branch": "master",
+    "license_path": "LICENSE",
+    "min_entries": 100,
+    "max_entries": 10000,
+    "omit_types": [
+      "IP-CIDR",
+      "IP-CIDR6",
+      "PROCESS-NAME"
+    ]
+  },
+  "blackmatrix-google-fcm": {
+    "repository": "blackmatrix7/ios_rule_script",
+    "branch": "master",
+    "path": "rule/Clash/GoogleFCM/GoogleFCM.list",
+    "format": "clash-domain",
+    "license": "GPL-2.0",
+    "license_branch": "master",
+    "license_path": "LICENSE",
+    "min_entries": 2,
+    "max_entries": 10000,
+    "omit_types": [
+      "IP-CIDR",
+      "IP-CIDR6"
+    ]
+  },
+  "blackmatrix-wechat": {
+    "repository": "blackmatrix7/ios_rule_script",
+    "branch": "master",
+    "path": "rule/Clash/WeChat/WeChat.list",
+    "format": "clash-domain",
+    "license": "GPL-2.0",
+    "license_branch": "master",
+    "license_path": "LICENSE",
+    "min_entries": 5,
+    "max_entries": 10000,
+    "omit_types": []
+  },
+  "blackmatrix-github": {
+    "repository": "blackmatrix7/ios_rule_script",
+    "branch": "master",
+    "path": "rule/Clash/GitHub/GitHub.list",
+    "format": "clash-domain",
+    "license": "GPL-2.0",
+    "license_branch": "master",
+    "license_path": "LICENSE",
+    "min_entries": 10,
+    "max_entries": 10000,
+    "omit_types": []
+  },
+  "blackmatrix-openai": {
+    "repository": "blackmatrix7/ios_rule_script",
+    "branch": "master",
+    "path": "rule/Clash/OpenAI/OpenAI.list",
+    "format": "clash-domain",
+    "license": "GPL-2.0",
+    "license_branch": "master",
+    "license_path": "LICENSE",
+    "min_entries": 10,
+    "max_entries": 10000,
+    "omit_types": [
+      "IP-CIDR",
+      "IP-ASN"
+    ]
+  },
+  "hagezi-light-domains": {
+    "repository": "hagezi/dns-blocklists",
+    "branch": "main",
+    "path": "wildcard/light-onlydomains.txt",
+    "format": "domains-exact",
+    "license": "GPL-3.0",
+    "license_branch": "main",
+    "license_path": "LICENSE",
+    "min_entries": 1000,
+    "max_entries": 100000,
+    "must_not_match": [
+      "play.googleapis.com",
+      "android.clients.google.com",
+      "accounts.google.com",
+      "mtalk.google.com",
+      "weixin.qq.com",
+      "res.wx.qq.com",
+      "login.weixin.qq.com",
+      "github.com"
+    ]
+  }
+}
