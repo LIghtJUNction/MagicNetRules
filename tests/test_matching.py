@@ -60,6 +60,8 @@ class MatchingTests(unittest.TestCase):
             ("service-bing-cn", "cn.bing.com", True),
             ("service-tencent", "qq.com", True),
             ("service-wechat", "weixin.qq.com", True),
+            ("service-wechat-dns", "weixin.qq.com", True),
+            ("service-wechat-dns", "wechatpay.com", True),
         ]
         for rule_name, target, expected in cases:
             with self.subTest(rule=rule_name, target=target):
@@ -130,6 +132,7 @@ class MatchingTests(unittest.TestCase):
             ("magicnet-cn-ip", "8.8.8.8"),
             ("service-openai", "baidu.com"),
             ("service-google", "apple.com"),
+            ("service-wechat-dns", "101.32.104.4"),
         ]
         for rule_name, target in negatives:
             with self.subTest(rule=rule_name, target=target):
