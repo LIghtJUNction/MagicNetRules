@@ -7,6 +7,9 @@ cd "$(dirname "$0")/.."
 (cd release && sha256sum --check --strict SHA256SUMS)
 digest=$(sha256sum release/magicnet-rules.tar.gz)
 digest=${digest%% *}
+manifest_digest=$(sha256sum dist/manifest.json)
+manifest_digest=${manifest_digest%% *}
+printf 'Runtime manifest SHA-256: %s\n' "$manifest_digest"
 previous=$(gh release list --repo "$GITHUB_REPOSITORY" --exclude-drafts --exclude-pre-releases --limit 1 --json tagName --jq '.[0].tagName // empty')
 if [ -n "$previous" ]; then
     mkdir -p .cache/previous-release
@@ -32,6 +35,7 @@ case "$state" in
         cat > .cache/release-notes.md <<EOF
 Build recipe: $GITHUB_SHA
 Runtime SHA-256: $digest
+Runtime manifest SHA-256: $manifest_digest
 
 Rules were fetched and validated at build time. The runtime archive contains classified SRS files and manifest.json; the sources archive contains the exact inputs and recipe for audit/rebuilding. Verify downloads with SHA256SUMS. Upstream commit IDs, URLs and content hashes are recorded in upstream-manifest.json. No downloaded rules or build output are committed to Git.
 EOF
