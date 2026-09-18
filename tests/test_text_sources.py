@@ -101,7 +101,7 @@ class TextSourceIntegrationTests(unittest.TestCase):
         names, binaries = fetcher.inventory(config)
         self.assertTrue(set(registry) <= set(names))
         self.assertFalse(set(registry) & set(config["standalone_sources"]))
-        self.assertEqual(len(config["merged_rulesets"]) + len(config["service_rulesets"]) + len(config["standalone_sources"]) + len(binaries), 115)
+        self.assertEqual(len(config["merged_rulesets"]) + len(config["service_rulesets"]) + len(config["standalone_sources"]) + len(binaries), 116)
 
     def test_google_push_is_not_misclassified_as_play_download_or_cn(self):
         config = json.loads((ROOT / "config/rulesets.json").read_text())

@@ -200,6 +200,9 @@
     "service-wechat": [
       "karing-acl4ssr-wechat",
       "blackmatrix-wechat"
+    ],
+    "service-wechat-dns": [
+      "blackmatrix-wechat"
     ]
   },
   "standalone_sources": [
