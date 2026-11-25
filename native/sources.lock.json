@@ -1,0 +1,14 @@
+{
+  "archive": {
+    "url": "https://github.com/LIghtJUNction/MagicNetRules/releases/download/rules-20261122-0c9d30da1d1fbde7/magicnet-rules-sources.tar.gz",
+    "sha256": "e87d1ee67142afc17e31f1f96e23bf0906c4601bfe6859f52d39e206cef1133b"
+  },
+  "light": {
+    "url": "https://raw.githubusercontent.com/hagezi/dns-blocklists/540c66a62ce98c63badfd0ab30e1c91e332036f7/wildcard/light-onlydomains.txt",
+    "sha256": "75c98e91333d8ca36f120a3595ad5d6b175f957c9b8c319dcb42c8c3f46bef7a"
+  },
+  "license": {
+    "url": "https://raw.githubusercontent.com/hagezi/dns-blocklists/540c66a62ce98c63badfd0ab30e1c91e332036f7/LICENSE",
+    "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986"
+  }
+}

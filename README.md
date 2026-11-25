@@ -18,6 +18,12 @@ MagicNet 的 sing-box 规则构建配方。仓库只保存脚本、源清单、�
 
 all-in-one 指一次分发的归档，不是把直连、代理、拦截规则混成一个无分类的 SRS。现有分类及兼容文件名由 `config/rulesets.json` 定义。
 
+## MagicBox 原生规则
+
+运行 `python3 native/build.py --out /tmp/magicbox-rules` 构建供 MagicBox 加载的精确域名表，同时生成数据许可和来源说明。默认输入来自固定提交的 HaGeZi Multi LIGHT。加上 `--all` 可基于指定 MagicNetRules 源快照构建按内容哈希寻址的分类目录。各类别、谓词类型和源格式版本均保留，三个仅有 SRS 的数据源在索引中单独列出。
+
+输入地址、提交和 SHA-256 见 [native/sources.lock.json](native/sources.lock.json)。所有下载均校验摘要。离线复现可指定 `--archive`、`--light`、`--license`。复用同一输出目录时相同内容的对象保持原有修改时间，新对象写入后才替换分类索引。现有 SRS 使用者继续使用上面的发布归档。
+
 ## 构建
 
 需要 Python 3.10+、Git、curl，以及校验和固定的 sing-box 编译器：

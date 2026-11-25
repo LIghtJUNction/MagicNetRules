@@ -41,9 +41,9 @@ def source_location(name: str) -> tuple[str, str, str]:
         "metacubex-geosite-cn": ("MetaCubeX/meta-rules-dat", "sing", "geo/geosite/cn.srs"),
         "metacubex-geoip-cn": ("MetaCubeX/meta-rules-dat", "sing", "geo/geoip/cn.srs"),
         "metacubex-geosite-geolocation-not-cn": ("MetaCubeX/meta-rules-dat", "sing", "geo/geosite/geolocation-!cn.srs"),
-        "yuu-geosite-pcdn-cn": ("Yuu518/sing-box-rules", "rule_set", "rule_set_site/pcdn-cn.srs"),
-        "yuu-geosite-stream-global": ("Yuu518/sing-box-rules", "rule_set", "rule_set_site/stream-global.srs"),
-        "yuu-geosite-ai": ("Yuu518/sing-box-rules", "rule_set", "rule_set_site/category-ai-!cn.srs"),
+        "yuu-geosite-pcdn-cn": ("Yuu518/sing-box-rules", "rule_set", "rule_set_site/pcdn-cn.json"),
+        "yuu-geosite-stream-global": ("Yuu518/sing-box-rules", "rule_set", "rule_set_site/stream-global.json"),
+        "yuu-geosite-ai": ("Yuu518/sing-box-rules", "rule_set", "rule_set_site/category-ai-!cn.json"),
     }
     if name in special:
         return special[name]
@@ -139,6 +139,29 @@ def validate_json(path: Path) -> None:
         raise ValueError(f"Invalid or empty rule source: {path.name}")
 
 
+def yuu_domain_source(data: bytes) -> tuple[dict, int]:
+    """Use the upstream JSON sibling; v4 adds fields outside this allowlist."""
+    document = json.loads(data)
+    if not isinstance(document, dict) or set(document) != {"version", "rules"}:
+        raise ValueError("Invalid Yuu domain source")
+    version = document["version"]
+    if type(version) is not int or version not in (1, 2, 4):
+        raise ValueError(f"Unknown Yuu source version: {version}")
+    if not isinstance(document["rules"], list) or not document["rules"]:
+        raise ValueError("Empty Yuu rules")
+    for rule in document["rules"]:
+        if not isinstance(rule, dict) or not rule or not set(rule) <= {"domain", "domain_suffix", "domain_regex", "domain_keyword"}:
+            raise ValueError("Unreviewed Yuu predicate; cannot project to SRS v2")
+        for raw in rule.values():
+            values = [raw] if isinstance(raw, str) else raw
+            if not isinstance(values, list) or not values or not all(isinstance(v, str) and v for v in values):
+                raise ValueError("Invalid Yuu predicate values")
+    # Leave every rule, string, order, regex and leading dot untouched.
+    if version == 4:
+        document["version"] = 2
+    return document, version
+
+
 def fetch_one(name: str, binary: bool, commits: dict, stage: Path, compiler: str) -> dict:
     if binary and name in TEXT_SOURCES:
         raise ValueError(f"Text feed cannot be a binary passthrough: {name}")
@@ -158,6 +181,16 @@ def fetch_one(name: str, binary: bool, commits: dict, stage: Path, compiler: str
         original = stage / "sources" / f"{name}.upstream.txt"
         original.write_bytes(data)
         audit.update({"license": TEXT_SOURCES[name]["license"], "original": f"sources/{original.name}"})
+    elif name.startswith("yuu-geosite-"):
+        if binary:
+            raise ValueError("Yuu JSON source cannot be a binary passthrough")
+        document, version = yuu_domain_source(data)
+        target.write_text(json.dumps(document, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        validate_json(target)
+        original = stage / "sources" / f"{name}.upstream.txt"
+        original.write_bytes(data)
+        audit.update({"format": "domain-source-json", "source_version": version,
+                      "normalized_version": document["version"], "original": f"sources/{original.name}"})
     elif name == "sukka-chatgpt-voice":
         target.write_bytes(data)
         validate_json(target)
