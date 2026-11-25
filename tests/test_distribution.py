@@ -30,6 +30,18 @@ class FetchTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 fetcher.source_location(name)
 
+    def test_yuu_projection_preserves_predicates_and_rejects_unknown_version_or_qualifier(self):
+        before = {"version": 4, "rules": [{"domain_suffix": [".only.test", "whole.test"],
+                  "domain_regex": "^host[0-9]+$", "domain_keyword": "word", "domain": "exact.test"}]}
+        after, version = fetcher.yuu_domain_source(json.dumps(before).encode())
+        self.assertEqual((version, after), (4, {"version": 2, "rules": before["rules"]}))
+        for bad in [{"version": 5, "rules": before["rules"]},
+                    {"version": 4, "rules": [{"network_interface_address": {"wifi": ["::/0"]}}]},
+                    {"version": 4, "rules": [{"domain_suffix": ["a"], "invert": True}]}]:
+            with self.subTest(bad=bad), self.assertRaises(ValueError):
+                fetcher.yuu_domain_source(json.dumps(bad).encode())
+        self.assertEqual(fetcher.source_location("yuu-geosite-ai")[2], "rule_set_site/category-ai-!cn.json")
+
     def test_https_only(self):
         with self.assertRaises(ValueError):
             fetcher.download("http://example.test/rules.srs")
